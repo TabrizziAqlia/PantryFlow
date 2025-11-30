@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PantryFlow - Sinkronisasi Stok, Non Sampah</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
+<!DOCTYPE html>    
+<html lang="id">    
+<head>    
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>PantryFlow - Sinkronisasi Stok, Non Sampah</title>    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">    
+    <link rel="stylesheet" href="style.css"> 
+</head>    
 <body>
-
     <header>
         <div class="header-content">
             <div class="rocket-icon">🚀</div> 
@@ -25,7 +24,7 @@
                 <form id="add-item-form">
                     <input type="text" id="item-name" placeholder="Nama Bahan (ex: Telur, Beras, Susu)" required>
                     
-                    <select id="item-category" required>
+                    <select id="item-category-kulkas" required>
                         <option value="" disabled selected>Pilih Kategori Simpan Kulkas (Untuk Estimasi ED)</option>
                         <option value="Sayur Segar">Sayur Segar (ED ±5 hari)</option>
                         <option value="Daging/Ikan">Daging/Ikan (ED ±5 hari)</option>
@@ -33,12 +32,12 @@
                         <option value="Kering">Kering (ED Jangka Panjang)</option>
                     </select>
 
-                     <select id="item-category" required>
+                   <select id="item-category-nonkulkas" required>
                         <option value="" disabled selected>Pilih Kategori Non Kulkas (Untuk Estimasi ED)</option>
-                        <option value="Sayur Segar">Sayur Segar (ED ±2 hari)</option>
-                        <option value="Daging/Ikan">Daging/Ikan (ED ±12 jam)</option>
-                        <option value="Susu UHT/Telur">Susu/Telur (ED ±14 hari)</option>
-                        <option value="Kering">Kering (ED Jangka Panjang)</option>
+                        <option value="Sayur Segar NonKulkas">Sayur Segar (ED ±2 hari)</option>
+                        <option value="Daging/Ikan NonKulkas">Daging/Ikan (ED ±12 jam)</option>
+                        <option value="Susu UHT/Telur NonKulkas">Susu/Telur (ED ±14 hari)</option>
+                        <option value="Kering NonKulkas">Kering (ED Jangka Panjang)</option>
                     </select>
 
                     <input type="date" id="exp-date" required>
@@ -91,11 +90,11 @@
                     </div>
             </section>
 
-            <section id="location-recommendation" class="span-full">
-                <h2>LOKASI REKOMENDASI TEMPAT 📍</h2>
-                <p>Temukan toko bahan makanan di sekitar **Karah, Surabaya** untuk meminimalkan waste dan mendapatkan bahan musiman/lokal dengan lebih mudah.</p>
-                <div id="location-output" class="recipe-output-grid">
-                    </div>
+            <section id="location-recommendation" class="span-full">    
+                <h2>LOKASI REKOMENDASI TEMPAT 📍</h2>    
+                <p>Temukan toko bahan makanan di sekitar **Karah, Surabaya** untuk meminimalkan waste dan mendapatkan bahan musiman/lokal dengan lebih mudah.</p>    
+                <div id="location-output" class="recipe-output-grid">    
+                </div>    
             </section>
 
         </div>
@@ -106,5 +105,6 @@
     </footer>
 
     <script src="script.js"></script>
-</body>
+
+</body>    
 </html>
