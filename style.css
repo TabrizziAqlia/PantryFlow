@@ -372,7 +372,7 @@ button[type="submit"]:hover, .action-button:hover {
     border-collapse: collapse;
     margin-top: 15px;
     font-size: 0.95em;
-    table-layout: fixed;
+    /* Hilangkan table-layout: fixed agar kolom bisa menyesuaikan */
 }
 
 .price-table th, .price-table td {
@@ -391,18 +391,34 @@ button[type="submit"]:hover, .action-button:hover {
     background-color: #f5f5f5;
 }
 
-.price-table td:nth-child(3) {
-    text-align: right; /* Harga rata kanan */
-    width: 30%;
+/* Alignment helper classes */
+.text-right {
+    text-align: right !important;
 }
-
-.price-table th:nth-child(3) {
-    text-align: right;
+.text-center {
+    text-align: center !important;
 }
 
 .price-table td strong {
     color: var(--color-primary);
     font-weight: 700;
+}
+
+/* Gaya Tautan Toko */
+.shop-link {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: var(--color-accent);
+    color: var(--color-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8em;
+    transition: background-color 0.2s;
+}
+
+.shop-link:hover {
+    background-color: #f0c330;
 }
 
 
@@ -430,8 +446,11 @@ footer {
         align-items: flex-start;
     }
     /* Mengatur lebar kolom tabel harga agar tetap terbaca */
-    .price-table td:nth-child(3) {
-        width: 35%;
+    .price-table th:nth-child(3), .price-table td:nth-child(3) {
+        width: 25%;
+    }
+    .price-table th:nth-child(4), .price-table td:nth-child(4) {
+        width: 30%;
     }
 }
 
@@ -460,6 +479,11 @@ footer {
         flex-direction: column;
     }
     .price-table td, .price-table th {
-        font-size: 0.85em;
+        font-size: 0.8em;
+        padding: 8px 5px;
+    }
+    .shop-link {
+        font-size: 0.7em;
+        padding: 4px 6px;
     }
 }
