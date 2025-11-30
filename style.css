@@ -1,270 +1,208 @@
 /* Palet Warna: Hijau Impact, Biru Dongker (Outer Space), Kuning Aksen */
 :root {
-    --color-primary: #21a179;       /* Hijau Impact */
-    --color-secondary: #1A237E;    /* Biru Dongker (Outer Space/Header) */
-    --color-accent: #FFD740;       /* Kuning Aksen (Tombol Penting) */
-    --color-white: #ffffff;
-    --color-text: #333333;
-    --color-light-bg: #f8f8f8;
-    --radius-lg: 12px;
+    --color-primary: #21a179;     /* Hijau Impact */
+    --color-secondary: #1A237E;   /* Biru Dongker (Outer Space/Header) */
+    --color-accent: #FFD740;      /* Kuning Aksen (Tombol Penting) */
+    --color-white: #ffffff;
+    --color-text: #333333;
+    --color-light-bg: #f8f8f8;
+    --radius-lg: 12px;
 }
 
 /* --------------------------------------------------- */
-/* GLOBAL STYLES & THEMATIC BACKGROUND (FIX: Pastikan URL background benar) */
+/* GLOBAL STYLES & THEMATIC BACKGROUND */
 /* --------------------------------------------------- */
 
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--color-text);
-    /* Menggunakan background yang lebih stabil jika gambar tidak dimuat */
-    background-color: var(--color-secondary);
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--color-text);
+    /* Motif Galaksi/Bintang */
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    background-color: var(--color-secondary); 
+    line-height: 1.6;
 }
 
 main {
-    padding: 30px 20px;
-    max-width: 1300px;
-    margin: 0 auto;
+    padding: 30px 20px;
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 section {
-    background-color: var(--color-white);
-    padding: 25px;
-    margin-bottom: 0px; 
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-h2 {
-    color: var(--color-secondary);
-    border-bottom: 2px solid var(--color-light-bg);
-    padding-bottom: 10px;
+    background-color: var(--color-white);
+    padding: 25px;
+    margin-bottom: 0px; /* Diatur oleh grid gap */
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* --------------------------------------------------- */
-/* HEADER & NAVIGATION */
+/* HEADER & NAVIGATION (Outer Space Theme) */
 /* --------------------------------------------------- */
 
 header {
-    background-color: var(--color-secondary);
-    color: var(--color-white);
-    padding: 20px 0;
-    text-align: center;
-    position: relative;
-    border-bottom: 5px solid var(--color-primary);
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    border-bottom: 5px solid var(--color-primary);
 }
 
 .header-content {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column; /* Mengubah menjadi kolom untuk menampung teks di bawah */
-    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .rocket-icon {
-    font-size: 2.5em; 
-    animation: bounce 2s infinite ease-in-out;
-    position: absolute; /* Pindahkan ikon ke kiri atas (sesuai gambar) */
-    left: 20px;
-    top: 5px;
+    font-size: 2.5em; 
+    margin-right: 15px;
+    animation: bounce 2s infinite ease-in-out;
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 header h1 {
-    font-size: 2.8em;
-    margin: 0;
-    color: var(--color-accent);
-    font-weight: 900;
-    line-height: 1;
+    font-size: 2.8em;
+    margin: 0;
+    color: var(--color-accent);
+    font-weight: 900;
+    line-height: 1;
 }
 
-header p { /* Teks Sinkronisasi Stok, Non Sampah */
-    margin-top: 5px;
-    font-style: italic;
-    color: #e0e0e0;
-    font-size: 1em;
+header p {
+    margin: 0;
+    font-style: italic;
+    color: #e0e0e0;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9em;
 }
-
 
 /* --------------------------------------------------- */
 /* GRID LAYOUT UTAMA */
 /* --------------------------------------------------- */
 
 .content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Default 2 kolom */
+    gap: 20px;
 }
 
 .span-full {
-    grid-column: 1 / span 2; 
+    grid-column: 1 / span 2; /* Dashboard dan Resep mengambil lebar penuh */
 }
 
 /* --------------------------------------------------- */
-/* FORM INPUT & BUTTONS (FIX: Tata letak form) */
+/* FORM INPUT & BUTTONS */
 /* --------------------------------------------------- */
 
 #add-item-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* FIX: Menyusun input dalam baris untuk form Tambah Stok Cepat */
-.form-row {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-
-.form-row input, .form-row select {
-    flex: 1; /* Agar input mengisi ruang yang tersedia */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 input[type="text"], input[type="date"], input[type="number"], select {
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.submit-button, .action-button {
-    padding: 12px 20px;
-    border-radius: 6px;
-    border: none;
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
+button[type="submit"], .action-button {
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
     text-decoration: none;
 }
 
-.submit-button:hover, .action-button:hover {
-    background-color: #178a63;
+button[type="submit"]:hover, .action-button:hover {
+    background-color: #178a63;
 }
-
-.delete-button {
-    background-color: #e74c3c !important;
-    margin-top: 10px;
-}
-.delete-button:hover {
-    background-color: #c0392b !important;
-}
-
 
 /* --------------------------------------------------- */
-/* PANTRY DASHBOARD & ITEM CARDS */
+/* PANTRY DASHBOARD (SMART SORTING) */
 /* --------------------------------------------------- */
 
 .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
 #item-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    min-height: 100px;
-    width: 100%; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    min-height: 100px;
 }
 
-/* FIX UTAMA CSS: Memastikan border muncul */
 .item-card {
-    padding: 15px;
-    border-radius: 10px;
-    width: 180px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    font-size: 0.9em;
-    transition: transform 0.2s;
-    position: relative;
-    border-style: solid; 
-    border-width: 3px; /* Ditingkatkan agar lebih jelas */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 15px;
+    border-radius: 10px;
+    width: 180px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    transition: transform 0.2s;
+    position: relative;
 }
 
 .item-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px);
 }
 
 .item-card strong {
-    font-size: 1.1em;
-    display: block;
-    margin-bottom: 5px;
-    color: var(--color-text); /* Pastikan nama item tetap gelap */
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 5px;
 }
 
-/* LOGIKA VISUAL WARNA PERINGATAN (Menggunakan border-color) */
-.status-merah { 
-    background-color: #ffe6e6; 
-    border-color: #e74c3c;     /* Border Merah */
+/* LOGIKA VISUAL WARNA PERINGATAN (Novelty Non-AI) */
+.status-merah { 
+    background-color: #ffe6e6; 
+    border: 2px solid #e74c3c; 
+    color: #e74c3c;
 }
 
-.status-kuning { 
-    background-color: #fff9e6;
-    border-color: #f39c12;     /* Border Kuning/Oranye */
+.status-kuning { 
+    background-color: #fff9e6;
+    border: 2px solid #f39c12; 
+    color: #f39c12;
 }
 
-.status-hijau { 
-    background-color: #e6ffe6;
-    border-color: #27ae60;     /* Border Hijau */
+.status-hijau { 
+    background-color: #e6ffe6;
+    border: 2px solid #27ae60;
+    color: #27ae60;
 }
 
 .days-left {
-    font-weight: bold;
-    display: block;
-    margin-top: 5px;
-    /* Warna teks days-left akan mengikuti warna border */
-    color: inherit; 
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
 }
-
-/* STYLES UNTUK PESAN KOSONG PANTRY */
-.empty-message {
-    width: 100%;
-    padding: 30px;
-    text-align: center;
-    background-color: #fff;
-    border: 2px dashed #95a5a6; 
-    border-radius: 10px;
-    color: #666;
-    margin: 20px 0;
-}
-
-.empty-message h3 {
-    color: var(--color-secondary);
-    margin-top: 0;
-}
-
-/* STYLES UNTUK PESAN KOSONG RESEP */
-.empty-message-recipe {
-    width: 100%;
-    padding: 30px;
-    text-align: center;
-    background-color: #ecf0f1; 
-    border: 1px solid #bdc3c7;
-    border-radius: 8px;
-    color: #34495e;
-    grid-column: 1 / span 2;
-}
-
 
 /* --------------------------------------------------- */
 /* IMPACT SECTION & RECIPE */
@@ -277,129 +215,128 @@ input[type="text"], input[type="date"], input[type="number"], select {
 }
 
 .metric-box {
-    text-align: center;
-    padding: 15px;
-    background-color: var(--color-light-bg);
-    border-radius: 8px;
-    flex: 1;
-    min-width: 120px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 15px;
+    background-color: var(--color-light-bg);
+    border-radius: 8px;
+    flex: 1;
 }
 
 .metric-value {
-    font-size: 2em;
-    font-weight: 700;
-    color: var(--color-primary);
-    margin: 0;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
 }
 
 .metric-label {
-    font-size: 0.9em;
-    color: #666;
-    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
 }
 
 .recipe-filters {
-    margin-bottom: 15px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .filter-button {
-    padding: 8px 15px;
-    border-radius: 20px;
-    border: 1px solid var(--color-primary);
-    background-color: var(--color-white);
-    color: var(--color-primary);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9em;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
 }
 
 .filter-button:hover {
-    background-color: #e6ffe6;
+    background-color: #e6ffe6;
 }
 
 .filter-button.active {
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
 }
 
 .recipe-output-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
 }
 
 .recipe-card {
-    background-color: var(--color-light-bg);
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    background-color: var(--color-light-bg);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .recipe-card h3 {
-    margin-top: 0;
-    color: var(--color-secondary);
+    margin-top: 0;
+    color: var(--color-secondary);
 }
 
+/* Styling specifically for the Maps button to differentiate */
 .recipe-card .action-button[style*="background-color: #3498db;"] {
     margin-top: 10px;
 }
 
 /* Footer */
 footer {
-    background-color: var(--color-secondary);
-    color: #e0e0e0;
-    text-align: center;
-    padding: 15px;
-    margin-top: 30px;
+    background-color: var(--color-secondary);
+    color: #e0e0e0;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
 }
 
 /* --------------------------------------------------- */
 /* RESPONSIVENESS */
 /* --------------------------------------------------- */
 @media (max-width: 1024px) {
-    .content-grid {
-        grid-template-columns: 1fr; 
-    }
-    .span-full {
-        grid-column: 1;
-    }
-    .dashboard-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .form-row {
-        flex-direction: column;
-    }
-    .form-row input[style*="width: 30%"] { /* Reset width 30% */
-        width: 100% !important; 
-    }
+    .content-grid {
+        grid-template-columns: 1fr; /* Kolom tunggal di layar tablet/kecil */
+    }
+    .span-full {
+        grid-column: 1;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 @media (max-width: 600px) {
-    .item-card {
-        width: 100%;
-        max-width: none;
-    }
+    .item-card {
+        width: 100%;
+        max-width: none;
+    }
+    .metric-box {
+        padding: 10px;
+    }
+    header h1 {
+        font-size: 2em;
+    }
+    .rocket-icon {
+        font-size: 2em;
+        margin-right: 10px;
+    }
+    .header-content {
+        padding: 0 20px;
+    }
+    .recipe-filters {
+        justify-content: space-between;
+    }
     #impact-metrics {
         flex-direction: column;
-    }
-    header h1 {
-        font-size: 2em;
-    }
-    .rocket-icon {
-        font-size: 2em;
-        left: 5px;
-    }
-    .header-content {
-        padding: 0 20px;
     }
 }
