@@ -3,23 +3,21 @@
 // ===================================================
 
 let pantryItems = [
-    // Data stok awal untuk demo (Bayam & Susu Merah, Telur Kuning)
-    { name: "Bayam Segar", expDate: "2025-12-03", qty: 1, estimatedPrice: 5000 },    
-    { name: "Telur Ayam", expDate: "2025-12-08", qty: 10, estimatedPrice: 24000 }, 
-    { name: "Susu UHT Kotak", expDate: "2025-12-05", qty: 2, estimatedPrice: 15000 }, 
-    { name: "Keju Cheddar", expDate: "2025-12-18", qty: 1, estimatedPrice: 15000 },   
-    { name: "Beras 5kg", expDate: "2026-06-15", qty: 1, estimatedPrice: 65000 }      
+    // Data stok awal untuk demo
+    { name: "Bayam Segar", expDate: "2025-12-03", qty: 1, estimatedPrice: 5000, category: "Sayur Segar Kulkas" },    
+    { name: "Telur Ayam", expDate: "2025-12-08", qty: 10, estimatedPrice: 24000, category: "Susu/Telur Kulkas" }, 
+    { name: "Susu UHT Kotak", expDate: "2025-12-05", qty: 2, estimatedPrice: 15000, category: "Susu/Telur Kulkas" }, 
+    { name: "Keju Cheddar", expDate: "2025-12-18", qty: 1, estimatedPrice: 15000, category: "Bahan Kering" },   
+    { name: "Beras 5kg", expDate: "2026-06-15", qty: 1, estimatedPrice: 65000, category: "Bahan Kering" }      
 ];
 
 let itemsSaved = 0; 
-const ITEM_PRICE_AVG = 15000; 
+const ITEM_PRICE_AVG = 10000; 
 let currentFilter = 'all'; 
-
-// Cek nama pengguna yang tersimpan
 let userName = localStorage.getItem('pantryflowUserName');
 
 
-// --- DATABASE RESEP DUMMY ---
+// --- DATABASE RESEP DUMMY (tetap sama) ---
 const recipeDatabase = [
     { 
         name: "Omelet Sayur Bumbu Dasar", 
@@ -65,7 +63,7 @@ const recipeDatabase = [
     },
 ];
 
-// --- DATABASE LOKASI REKOMENDASI ---
+// --- DATABASE LOKASI REKOMENDASI (tetap sama) ---
 const locationDatabase = [
     {
         name: "Pasar Karah",
@@ -87,6 +85,50 @@ const locationDatabase = [
     }
 ];
 
+// --- DATABASE HARGA BAHAN POKOK (Rata-rata Harga Pasar Jatim) ---
+const PRICE_GUIDE = [
+    // PROTEIN & OLAHAN
+    { name: "Daging Ayam Ras", unit: "kg", price: 36000, color: "#e74c3c" },
+    { name: "Telur Ayam Ras", unit: "kg", price: 28000, color: "#f39c12" },
+    { name: "Ikan Bandeng", unit: "kg", price: 34000, color: "#3498db" },
+    { name: "Ikan Lele", unit: "kg", price: 26000, color: "#3498db" },
+    { name: "Ikan Tongkol Segar", unit: "kg", price: 36000, color: "#3498db" },
+    { name: "Ikan Asin Teri", unit: "kg", price: 77000, color: "#3498db" },
+    { name: "Susu Kental Manis", unit: "370 gr/kl", price: 12500, color: "#9b59b6" },
+    { name: "Daging Sapi (Paha)", unit: "kg", price: 119000, color: "#e74c3c" },
+
+    // KARBOHIDRAT & POKOK
+    { name: "Beras Medium", unit: "kg", price: 12850, color: "#27ae60" },
+    { name: "Tepung Terigu", unit: "kg", price: 11500, color: "#27ae60" },
+    { name: "Jagung Pipilan Kering", unit: "kg", price: 7650, color: "#27ae60" },
+    { name: "Ketela Pohon", unit: "kg", price: 5000, color: "#27ae60" },
+    { name: "Indomie Kari Ayam", unit: "bungkus", price: 3600, color: "#f39c12" },
+
+    // MINYAK & GULA
+    { name: "Minyak Goreng Curah", unit: "liter", price: 18700, color: "#f39c12" },
+    { name: "Minyakita", unit: "liter", price: 16700, color: "#27ae60" },
+    { name: "Gula Kristal Putih", unit: "kg", price: 16400, color: "#f39c12" },
+
+    // BUMBU & REMPAH
+    { name: "Bawang Putih", unit: "kg", price: 30200, color: "#9b59b6" },
+    { name: "Bawang Merah", unit: "kg", price: 40100, color: "#9b59b6" },
+    { name: "Cabai Rawit Merah", unit: "kg", price: 45800, color: "#e74c3c" },
+    { name: "Cabai Merah Keriting", unit: "kg", price: 48400, color: "#e74c3c" },
+    { name: "Garam Beryodium", unit: "kg", price: 9400, color: "#9b59b6" },
+
+    // SAYURAN
+    { name: "Tomat", unit: "kg", price: 11650, color: "#27ae60" },
+    { name: "Kol/Kubis", unit: "kg", price: 7150, color: "#27ae60" },
+    { name: "Kentang", unit: "kg", price: 15000, color: "#27ae60" },
+    { name: "Wortel", unit: "kg", price: 14200, color: "#27ae60" },
+    { name: "Buncis", unit: "kg", price: 12150, color: "#27ae60" },
+
+    // KACANG-KACANGAN
+    { name: "Kacang Kedelai Impor", unit: "kg", price: 12550, color: "#9b59b6" },
+    { name: "Kacang Hijau", unit: "kg", price: 23350, color: "#9b59b6" },
+    { name: "Kacang Tanah", unit: "kg", price: 29250, color: "#9b59b6" },
+];
+
 
 // ===================================================
 //  UTILITY FUNCTIONS
@@ -105,13 +147,13 @@ function calculateDaysRemaining(expDate) {
 /** Menentukan kelas warna berdasarkan sisa hari */
 function getStatusClass(days) {
     if (days <= 0) { 
-        return 'status-merah'; // Kedaluwarsa atau kurang dari 7 hari
+        return 'status-merah'; 
     } else if (days <= 7) {
         return 'status-merah'; 
     } else if (days <= 14) {
-        return 'status-kuning'; // Kurang dari 14 hari
+        return 'status-kuning'; 
     } else {
-        return 'status-hijau'; // Aman
+        return 'status-hijau'; 
     }
 }
 
@@ -122,23 +164,26 @@ function getStatusClass(days) {
 
 /** Memperbarui metrik Dampak Saya */
 function updateImpactMetrics() {
-    const totalSavedValue = itemsSaved * (ITEM_PRICE_AVG / 2); 
+    // Diasumsikan rata-rata item terselamatkan 50% dari harga rata-rata
+    const totalSavedValue = itemsSaved * ITEM_PRICE_AVG; 
     document.getElementById('total-saved').textContent = `Rp ${totalSavedValue.toLocaleString('id-ID')}`;
     document.getElementById('items-saved').textContent = itemsSaved;
 }
 
 /** Mensimulasikan dampak saat pengguna 'memasak' resep */
-function simulateCookingAndImpact() {
-    itemsSaved += 2; 
+function simulateCookingAndImpact(itemCount = 1) {
+    itemsSaved += itemCount; 
     updateImpactMetrics(); 
 }
 
 // Event listener untuk tombol 'Masak Resep Ini'
 document.addEventListener('click', function(e) {
     if (e.target && e.target.classList.contains('action-button')) {
-        // Hanya memicu simulasi jika bukan tombol 'Lihat di Maps'
+        // Hanya memicu simulasi jika tombol masak
         if (e.target.textContent.indexOf('Masak Resep Ini') !== -1) {
-             simulateCookingAndImpact();
+             // Simulasi item yang dimasak (misalnya 2 item)
+             simulateCookingAndImpact(2); 
+             // Opsi: Tambahkan feedback visual bahwa item telah digunakan
         }
     }
 });
@@ -171,6 +216,7 @@ function renderPantry() {
         itemCard.setAttribute('data-index', index);
         itemCard.innerHTML = `
             <strong>${item.name} (${item.qty})</strong><br>
+            <small>Kategori: ${item.category}</small><br>
             <small>ED: ${item.expDate}</small><br>
             <span class="days-left">${daysText}</span>
         `;
@@ -180,7 +226,7 @@ function renderPantry() {
     updateImpactMetrics();
 }
 
-/** Merender daftar Resep Rekomendasi Minimum-Waste */
+/** Merender daftar Resep Rekomendasi Minimum-Waste (Logika tetap sama) */
 function renderRecipes() {
     const outputContainer = document.getElementById('recipe-output');
     outputContainer.innerHTML = '';
@@ -249,7 +295,7 @@ function renderRecipes() {
     }
 }
 
-/** Merender daftar Lokasi Rekomendasi */
+/** Merender daftar Lokasi Rekomendasi (tetap sama) */
 function renderLocations() {
     const outputContainer = document.getElementById('location-output');
     outputContainer.innerHTML = '';
@@ -270,12 +316,51 @@ function renderLocations() {
     });
 }
 
+/** Merender daftar harga bahan makanan (Fungsi Baru) */
+function renderPriceList() {
+    const outputContainer = document.getElementById('price-list-output');
+    outputContainer.innerHTML = '';
+    
+    // Header tabel
+    let tableHTML = `
+        <table class="price-table">
+            <thead>
+                <tr>
+                    <th>Bahan Makanan</th>
+                    <th>Satuan</th>
+                    <th>Harga Rata-rata</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    // Isi baris tabel
+    PRICE_GUIDE.forEach(item => {
+        // Menggunakan toLocaleString untuk format Rupiah yang rapi
+        const formattedPrice = `Rp ${item.price.toLocaleString('id-ID')}`;
+        tableHTML += `
+            <tr>
+                <td><span style="color: ${item.color};">•</span> ${item.name}</td>
+                <td>${item.unit}</td>
+                <td><strong>${formattedPrice}</strong></td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    outputContainer.innerHTML = tableHTML;
+}
+
 
 // ===================================================
 //  USER INTERACTION HANDLERS (INPUT & WELCOME)
 // ===================================================
 
-/** Menampilkan form nama atau pesan motivasi */
+/** Menampilkan form nama atau pesan motivasi (tetap sama) */
 function displayWelcomeMessage(name) {
     const welcomeMessageDiv = document.getElementById('welcome-message');
     const nameForm = document.getElementById('name-form');
@@ -290,12 +375,11 @@ function displayWelcomeMessage(name) {
         welcomeMessageDiv.style.display = 'block';
         welcomeMessageDiv.innerHTML = messageHTML;
 
-        // Tambahkan event listener untuk ganti nama
         document.getElementById('change-name-link').addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('pantryflowUserName');
             userName = null;
-            displayWelcomeMessage(null); // Tampilkan kembali form input
+            displayWelcomeMessage(null); 
         });
     } else {
         nameForm.style.display = 'block';
@@ -304,7 +388,7 @@ function displayWelcomeMessage(name) {
 }
 
 
-// Event listener untuk pengiriman form input nama
+// Event listener untuk pengiriman form input nama (tetap sama)
 document.getElementById('name-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const nameInput = document.getElementById('user-name-input').value.trim();
@@ -315,12 +399,13 @@ document.getElementById('name-form').addEventListener('submit', function(e) {
     }
 });
 
-// Event listener untuk pengiriman form input item
+// Event listener untuk pengiriman form input item (Diperbaiki)
 document.getElementById('add-item-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('item-name').value;
     const date = document.getElementById('exp-date').value;
     const qty = parseInt(document.getElementById('quantity').value);
+    // Ambil value category
     const category = document.getElementById('item-category').value; 
     const estimatedPrice = Math.floor(Math.random() * 50000) + 5000; 
 
@@ -329,7 +414,8 @@ document.getElementById('add-item-form').addEventListener('submit', function(e) 
             name: name, 
             expDate: date, 
             qty: qty,
-            estimatedPrice: estimatedPrice
+            estimatedPrice: estimatedPrice,
+            category: category // Ditambahkan properti category
         });
         renderPantry();
         this.reset();
@@ -338,7 +424,7 @@ document.getElementById('add-item-form').addEventListener('submit', function(e) 
     }
 });
 
-// Event listener untuk filter resep (kost, quick, local)
+// Event listener untuk filter resep (tetap sama)
 document.querySelectorAll('.filter-button').forEach(button => {
     button.addEventListener('click', () => {
         document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
@@ -354,7 +440,8 @@ document.querySelectorAll('.filter-button').forEach(button => {
 // ===================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    displayWelcomeMessage(userName); // Tampilkan pesan/form nama
-    renderPantry();                 // Render Pantry dan Resep
-    renderLocations();              // Render Lokasi
+    displayWelcomeMessage(userName); 
+    renderPantry();                 
+    renderLocations();              
+    renderPriceList();              // Dipanggil saat inisialisasi
 });
