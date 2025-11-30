@@ -1,5 +1,5 @@
 // ===================================================
-//  GLOBAL DATA & CONFIGURATION
+//  GLOBAL DATA & CONFIGURATION (Lengkap)
 // ===================================================
 
 let pantryItems = [
@@ -20,7 +20,7 @@ let currentFilter = 'all';
 let userName = localStorage.getItem('pantryflowUserName');
 
 
-// --- DATABASE RESEP DUMMY (DIPERBARUI: 15 Resep) ---
+// --- DATABASE RESEP DUMMY (15 Resep) ---
 const recipeDatabase = [
     { 
         name: "Omelet Sayur Bumbu Dasar", 
@@ -42,13 +42,13 @@ const recipeDatabase = [
     },
     { 
         name: "Tumis Kangkung Pedas", 
-        ingredients: ["Kangkung", "Bawang Putih", "Cabai Rawit Merah"], // Bahan diperluas
+        ingredients: ["Kangkung", "Bawang Putih", "Cabai Rawit Merah"], 
         tags: ["quick"], 
         cookpadLink: "https://cookpad.com/id/resep/11223344" 
     },
     { 
         name: "Nasi Gila Anak Kost", 
-        ingredients: ["Telur Ayam Ras", "Beras Medium", "Sosis Ayam"], // Bahan diperluas
+        ingredients: ["Telur Ayam Ras", "Beras Medium", "Sosis Ayam"], 
         tags: ["kost", "quick"], 
         cookpadLink: "https://cookpad.com/id/resep/15656236" 
     },
@@ -64,7 +64,6 @@ const recipeDatabase = [
         tags: ["all"], 
         cookpadLink: "https://cookpad.com/id/resep/25176969" 
     },
-    // --- 8 Resep Baru Tambahan (Total 15 Resep) ---
     { 
         name: "Sayur Sop Komplit", 
         ingredients: ["Wortel", "Kentang", "Kol/Kubis", "Daging Ayam Ras"], 
@@ -114,7 +113,8 @@ const recipeDatabase = [
         cookpadLink: "https://cookpad.com/id/resep/19191919" 
     },
 ];
-// --- DATABASE LOKASI REKOMENDASI (tetap sama) ---
+
+// --- DATABASE LOKASI REKOMENDASI ---
 const locationDatabase = [
     {
         name: "Pasar Karah",
@@ -137,7 +137,7 @@ const locationDatabase = [
 ];
 
 
-// --- DATABASE HARGA BAHAN POKOK (40 Item - DIPERBARUI) ---
+// --- DATABASE HARGA BAHAN POKOK (40 Item) ---
 const PRICE_GUIDE = [
     // PROTEIN & OLAHAN (14 Item)
     { name: "Daging Ayam Ras", unit: "kg", price: 36000, color: "#e74c3c", shopLink: "https://shopee.co.id/Daging-Ayam-Segar-termurah" },
@@ -148,7 +148,6 @@ const PRICE_GUIDE = [
     { name: "Ikan Asin Teri", unit: "kg", price: 77000, color: "#3498db", shopLink: "https://lazada.co.id/ikan-asin-teri-premium" },
     { name: "Susu Kental Manis", unit: "370 gr/kl", price: 12500, color: "#9b59b6", shopLink: "https://shopee.co.id/susu-kental-manis-ekonomis" },
     { name: "Daging Sapi (Paha)", unit: "kg", price: 119000, color: "#e74c3c", shopLink: "https://tokopedia.com/daging-sapi-paha-murah" },
-    // --- Tambahan Protein/Olahannya ---
     { name: "Tahu Putih", unit: "10 pcs", price: 7500, color: "#27ae60", shopLink: "https://shopee.co.id/tahu-putih-mentah-murah" },
     { name: "Tempe", unit: "Papan besar", price: 6000, color: "#27ae60", shopLink: "https://tokopedia.com/tempe-mentah-papan-besar" },
     { name: "Sosis Ayam", unit: "500 gr", price: 18000, color: "#f39c12", shopLink: "https://lazada.co.id/sosis-ayam-frozen-murah" },
@@ -163,7 +162,6 @@ const PRICE_GUIDE = [
     { name: "Jagung Pipilan Kering", unit: "kg", price: 7650, color: "#27ae60", shopLink: "https://shopee.co.id/jagung-pipilan-kering" },
     { name: "Ketela Pohon", unit: "kg", price: 5000, color: "#27ae60", shopLink: "https://tokopedia.com/ketela-pohon-singkong-murah" },
     { name: "Indomie Kari Ayam", unit: "bungkus", price: 3600, color: "#f39c12", shopLink: "https://lazada.co.id/indomie-kari-ayam-grosir" },
-    // --- Tambahan Karbo/Pokok ---
     { name: "Mie Telur Kering", unit: "500 gr", price: 13000, color: "#f39c12", shopLink: "https://shopee.co.id/mie-telur-kering-grosir" },
     { name: "Roti Tawar", unit: "bungkus", price: 15000, color: "#9b59b6", shopLink: "https://tokopedia.com/roti-tawar-fresh" },
     { name: "Gandum Utuh", unit: "kg", price: 18000, color: "#27ae60", shopLink: "https://lazada.co.id/gandum-utuh-1kg" },
@@ -180,7 +178,6 @@ const PRICE_GUIDE = [
     { name: "Cabai Rawit Merah", unit: "kg", price: 45800, color: "#e74c3c", shopLink: "https://shopee.co.id/cabe-rawit-merah-pasar" },
     { name: "Cabai Merah Keriting", unit: "kg", price: 48400, color: "#e74c3c", shopLink: "https://tokopedia.com/cabe-merah-keriting" },
     { name: "Garam Beryodium", unit: "kg", price: 9400, color: "#9b59b6", shopLink: "https://lazada.co.id/garam-beryodium-termurah" },
-    // --- Tambahan Bumbu/Rempah ---
     { name: "Kecap Manis", unit: "600 ml", price: 23000, color: "#f39c12", shopLink: "https://shopee.co.id/kecap-manis-refill-besar" },
     { name: "Saus Sambal", unit: "340 ml", price: 10500, color: "#e74c3c", shopLink: "https://tokopedia.com/saus-sambal-murah" },
     { name: "Lada Bubuk", unit: "sachet", price: 500, color: "#9b59b6", shopLink: "https://lazada.co.id/lada-bubuk-sachet-grosir" },
@@ -193,12 +190,11 @@ const PRICE_GUIDE = [
     { name: "Kentang", unit: "kg", price: 15000, color: "#27ae60", shopLink: "https://shopee.co.id/kentang-kiloan-sayur" },
     { name: "Wortel", unit: "kg", price: 14200, color: "#27ae60", shopLink: "https://tokopedia.com/wortel-sayur-murah" },
     { name: "Buncis", unit: "kg", price: 12150, color: "#27ae60", shopLink: "https://lazada.co.id/buncis-segar-1kg" },
-    // --- Tambahan Sayuran/Pelengkap ---
     { name: "Sawi Hijau", unit: "ikat", price: 4000, color: "#27ae60", shopLink: "https://shopee.co.id/sawi-hijau-pasar-lokal" },
     { name: "Kangkung", unit: "ikat", price: 4000, color: "#27ae60", shopLink: "https://tokopedia.com/kangkung-ikat-segar" },
     { name: "Daun Bawang", unit: "ikat", price: 6000, color: "#27ae60", shopLink: "https://lazada.co.id/daun-bawang-fresh" },
     { name: "Santan Instan", unit: "65 ml", price: 3500, color: "#9b59b6", shopLink: "https://shopee.co.id/santan-instan-kecil" },
-    { name: "Bayam Segar", unit: "ikat", price: 5000, color: "#27ae60", shopLink: "https://tokopedia.com/bayam-segar-murah" }, // Pindahkan Bayam ke sini
+    { name: "Bayam Segar", unit: "ikat", price: 5000, color: "#27ae60", shopLink: "https://tokopedia.com/bayam-segar-murah" },
 
     // KACANG-KACANGAN (4 Item)
     { name: "Kacang Kedelai Impor", unit: "kg", price: 12550, color: "#9b59b6", shopLink: "https://shopee.co.id/kacang-kedelai-impor-murah" },
@@ -327,13 +323,11 @@ function renderRecipes() {
     // 4. Terapkan Filter Kategori (kost, quick, local) dan Prioritas
     let displayedRecipes = filteredRecipes.filter(recipe => {
         const matchesTag = currentFilter === 'all' || recipe.tags.includes(currentFilter);
-        const usesUrgentItem = recipe.ingredients.some(ing => urgentNames.includes(ing));
-        // Jika filter "all", prioritaskan yang menggunakan urgent item
-        // Jika filter spesifik, harus sesuai tag DAN memiliki bahan mendesak
-        return matchesTag && (currentFilter === 'all' ? true : usesUrgentItem);
+        // Jika filter spesifik, harus sesuai tag
+        return matchesTag; 
     });
 
-    // 5. Urutkan: PRIORITASKAN resep yang menggunakan stok mendesak
+    // 5. Urutkan: PRIORITASKAN resep yang menggunakan stok mendesak (urgentItems)
     if (urgentNames.length > 0) {
         displayedRecipes.sort((a, b) => {
              const aUrgentScore = a.ingredients.filter(ing => urgentNames.includes(ing)).length;
@@ -401,7 +395,7 @@ function renderLocations() {
     });
 }
 
-/** Merender daftar harga bahan makanan (DIPERBARUI DENGAN LINK BELANJA) */
+/** Merender daftar harga bahan makanan */
 function renderPriceList() {
     const outputContainer = document.getElementById('price-list-output');
     outputContainer.innerHTML = '';
@@ -449,7 +443,7 @@ function renderPriceList() {
 //  USER INTERACTION HANDLERS (INPUT & WELCOME)
 // ===================================================
 
-/** Menampilkan form nama atau pesan motivasi (tetap sama) */
+/** Menampilkan form nama atau pesan motivasi */
 function displayWelcomeMessage(name) {
     const welcomeMessageDiv = document.getElementById('welcome-message');
     const nameForm = document.getElementById('name-form');
@@ -477,7 +471,7 @@ function displayWelcomeMessage(name) {
 }
 
 
-// Event listener untuk pengiriman form input nama (tetap sama)
+// Event listener untuk pengiriman form input nama
 document.getElementById('name-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const nameInput = document.getElementById('user-name-input').value.trim();
@@ -488,13 +482,12 @@ document.getElementById('name-form').addEventListener('submit', function(e) {
     }
 });
 
-// Event listener untuk pengiriman form input item (Diperbaiki)
+// Event listener untuk pengiriman form input item
 document.getElementById('add-item-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('item-name').value;
     const date = document.getElementById('exp-date').value;
     const qty = parseInt(document.getElementById('quantity').value);
-    // Ambil value category
     const category = document.getElementById('item-category').value; 
     const estimatedPrice = Math.floor(Math.random() * 50000) + 5000; 
 
@@ -504,7 +497,7 @@ document.getElementById('add-item-form').addEventListener('submit', function(e) 
             expDate: date, 
             qty: qty,
             estimatedPrice: estimatedPrice,
-            category: category // Ditambahkan properti category
+            category: category
         });
         renderPantry();
         this.reset();
@@ -513,7 +506,7 @@ document.getElementById('add-item-form').addEventListener('submit', function(e) 
     }
 });
 
-// Event listener untuk filter resep (tetap sama)
+// Event listener untuk filter resep
 document.querySelectorAll('.filter-button').forEach(button => {
     button.addEventListener('click', () => {
         document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
@@ -532,5 +525,5 @@ document.addEventListener('DOMContentLoaded', () => {
     displayWelcomeMessage(userName); 
     renderPantry();                 
     renderLocations();              
-    renderPriceList();              // Dipanggil saat inisialisasi
+    renderPriceList();              
 });
