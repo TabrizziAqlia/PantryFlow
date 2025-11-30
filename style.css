@@ -358,6 +358,53 @@ button[type="submit"]:hover, .action-button:hover {
     color: var(--color-secondary);
 }
 
+/* --------------------------------------------------- */
+/* PRICE GUIDE SECTION (Tambahan Baru) */
+/* --------------------------------------------------- */
+
+#price-guide-section {
+    /* Mengambil lebar penuh */
+    grid-column: 1 / -1; 
+}
+
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.95em;
+    table-layout: fixed;
+}
+
+.price-table th, .price-table td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.price-table th {
+    background-color: var(--color-light-bg);
+    color: var(--color-secondary);
+    font-weight: 600;
+}
+
+.price-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.price-table td:nth-child(3) {
+    text-align: right; /* Harga rata kanan */
+    width: 30%;
+}
+
+.price-table th:nth-child(3) {
+    text-align: right;
+}
+
+.price-table td strong {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
 
 /* Footer */
 footer {
@@ -381,6 +428,10 @@ footer {
     .dashboard-header {
         flex-direction: column;
         align-items: flex-start;
+    }
+    /* Mengatur lebar kolom tabel harga agar tetap terbaca */
+    .price-table td:nth-child(3) {
+        width: 35%;
     }
 }
 
@@ -407,5 +458,8 @@ footer {
     }
     #impact-metrics {
         flex-direction: column;
+    }
+    .price-table td, .price-table th {
+        font-size: 0.85em;
     }
 }
