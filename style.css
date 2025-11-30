@@ -212,6 +212,14 @@ button[type="submit"]:hover, .action-button:hover {
     background-color: #2980b9 !important;
 }
 
+/* Gaya khusus untuk tombol video */
+.video-button {
+    background-color: #c0392b !important; /* Merah Video */
+}
+.video-button:hover {
+    background-color: #a93226 !important;
+}
+
 
 /* --------------------------------------------------- */
 /* PANTRY DASHBOARD (SMART SORTING) */
@@ -358,6 +366,30 @@ button[type="submit"]:hover, .action-button:hover {
     color: var(--color-secondary);
 }
 
+/* Gaya untuk Video Card */
+.video-card .video-placeholder {
+    height: 150px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.video-card .video-source {
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+.video-card iframe {
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
 /* --------------------------------------------------- */
 /* PRICE GUIDE SECTION (Tambahan Baru) */
 /* --------------------------------------------------- */
@@ -372,6 +404,7 @@ button[type="submit"]:hover, .action-button:hover {
     border-collapse: collapse;
     margin-top: 15px;
     font-size: 0.95em;
+    /* Hilangkan table-layout: fixed agar kolom bisa menyesuaikan */
 }
 
 .price-table th, .price-table td {
