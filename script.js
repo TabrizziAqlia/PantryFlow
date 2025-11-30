@@ -1,12 +1,13 @@
 // Data lokal untuk menyimpan daftar item pantry
 let pantryItems = JSON.parse(localStorage.getItem('pantryItems')) || [];
 
-// Data dummy resep (Disimpan di sini agar tidak hilang saat refresh)
+// Data dummy resep yang sudah disederhanakan tipenya
 const RECIPES_DATA = [
     { name: "Sayur Sop Ayam", required: ["ayam", "wortel", "kentang", "buncis"], type: "Daging & Sayur" },
     { name: "Nasi Goreng Sederhana", required: ["nasi", "telur", "bawang merah", "kecap"], type: "Nasi & Mie" },
     { name: "Tumis Kangkung Bawang Putih", required: ["kangkung", "bawang putih", "cabai"], type: "Sayuran" },
-    { name: "Sandwich Keju Panggang", required: ["roti", "keju", "mentega"], type: "Roti & Cemilan" }
+    { name: "Ayam Goreng Mentega", required: ["ayam", "mentega", "bawang bombay"], type: "Daging & Sayur" },
+    { name: "Mie Instan Rebus Telur", required: ["mie instan", "telur"], type: "Nasi & Mie" }
 ];
 let activeFilter = 'all';
 
@@ -23,6 +24,7 @@ let activeFilter = 'all';
 function calculateDaysRemaining(dateString) {
     const today = new Date();
     today.setHours(0, 0, 0, 0); 
+    // Menggunakan dateString langsung karena format date input sudah YYYY-MM-DD
     const expiryDate = new Date(dateString);
     expiryDate.setHours(0, 0, 0, 0); 
 
@@ -38,11 +40,11 @@ function calculateDaysRemaining(dateString) {
  */
 function getStatusClass(daysLeft) {
     if (daysLeft <= 0) {
-        return 'status-merah';     // Kedaluwarsa
+        return 'status-merah';      // Kedaluwarsa
     } else if (daysLeft <= 7) {
-        return 'status-kuning';    // Segera habis/warning (1 minggu)
+        return 'status-kuning';     // Segera habis/warning (1 minggu)
     } else {
-        return 'status-hijau';     // Aman
+        return 'status-hijau';      // Aman
     }
 }
 
@@ -65,21 +67,24 @@ function savePantry() {
  * Menambahkan item baru dari form.
  */
 function addItem(event) {
-    event.preventDefault();  
+    event.preventDefault();  
     
+    // FIX JS: Mengambil semua input yang relevan
     const name = document.getElementById('item-name').value.toLowerCase().trim();
+    const category = document.getElementById('item-category').value; // Input baru
     const expDate = document.getElementById('exp-date').value;
     const qty = parseInt(document.getElementById('item-qty').value, 10);
-    const unit = document.getElementById('item-unit').value;
+    const unit = document.getElementById('item-unit').value.trim(); // Input baru
 
-    if (!name || !expDate || isNaN(qty) || qty <= 0) {
+    if (!name || !expDate || isNaN(qty) || qty <= 0 || !category || !unit) {
         alert('Mohon lengkapi semua data dengan benar.');
         return;
     }
     
     const newItem = {
-        id: Date.now(), 
+        id: Date.now(),
         name: name,
+        category: category,
         expDate: expDate,
         qty: qty,
         unit: unit
@@ -102,9 +107,10 @@ function deleteItem(id) {
 }
 
 /**
- * Mengupdate metrik Dampak (Total Item & Item Kedaluwarsa).
+ * Mengupdate metrik Dampak.
  */
 function updateImpactMetrics() {
+    // FIX JS: Menghitung total item dan item kedaluwarsa
     const totalItems = pantryItems.reduce((sum, item) => sum + item.qty, 0);
     const expiredCount = pantryItems.filter(item => calculateDaysRemaining(item.expDate) <= 0).length;
     const totalJenisItem = pantryItems.length;
@@ -116,7 +122,7 @@ function updateImpactMetrics() {
 
 
 // ---------------------------------------------------
-// FUNGSI RENDERING & DISPLAY (TERMASUK FIX)
+// FUNGSI RENDERING & DISPLAY
 // ---------------------------------------------------
 
 /**
@@ -125,20 +131,19 @@ function updateImpactMetrics() {
 function renderPantry() {
     const sortBy = document.getElementById('sort-by').value;
 
-    // FIX 1: Logika Sorting yang Benar
+    // Logika Sorting
+    const sortedItems = [...pantryItems]; // Duplikasi untuk menghindari mutasi
     if (sortBy === 'exp-asc') {
-        // Mengurutkan berdasarkan tanggal kedaluwarsa (dari yang paling dekat ke yang paling jauh)
-        pantryItems.sort((a, b) => new Date(a.expDate) - new Date(b.expDate));
+        sortedItems.sort((a, b) => new Date(a.expDate) - new Date(b.expDate));
     } else if (sortBy === 'name-asc') {
-        // Mengurutkan berdasarkan nama (A-Z)
-        pantryItems.sort((a, b) => a.name.localeCompare(b.name));
+        sortedItems.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     const listContainer = document.getElementById('item-list');
     listContainer.innerHTML = '';
     
     // Penanganan Empty State
-    if (pantryItems.length === 0) {
+    if (sortedItems.length === 0) {
         listContainer.innerHTML = `
             <div class="empty-message">
                 <h3>Pantry Digital Anda Kosong 🗑️</h3>
@@ -150,28 +155,29 @@ function renderPantry() {
         return; 
     }
 
-    pantryItems.forEach((item) => {
+    sortedItems.forEach((item) => {
         const daysLeft = calculateDaysRemaining(item.expDate);
         const statusClass = getStatusClass(daysLeft);
         const daysText = daysLeft <= 0 ? 'KEDALUWARSA!' : `Sisa Hari: ${daysLeft}`;
 
-        // FIX 2: Pemformatan Tanggal yang Rapi (DD/MM/YYYY)
-        const formattedDate = new Date(item.expDate).toLocaleDateString('id-ID', {
+        // Pemformatan Tanggal yang Rapi (DD/MM/YYYY)
+        const dateObj = new Date(item.expDate);
+        const formattedDate = dateObj.toLocaleDateString('id-ID', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
         });
 
         const itemCard = document.createElement('div');
-        // Kelas status-merah/kuning/hijau yang memberikan border-color (FIX CSS sebelumnya)
         itemCard.className = `item-card ${statusClass}`;
         itemCard.setAttribute('data-id', item.id);
         
         itemCard.innerHTML = `
-            <strong>${item.name} (${item.qty} ${item.unit})</strong><br>
+            <strong>${item.name.charAt(0).toUpperCase() + item.name.slice(1)} (${item.qty} ${item.unit})</strong><br>
+            <small>Kategori: ${item.category}</small><br>
             <small>ED: ${formattedDate}</small><br> 
             <span class="days-left">${daysText}</span>
-            <button class="action-button" style="background-color: #e74c3c; margin-top: 10px;" onclick="deleteItem(${item.id})">Hapus</button>
+            <button class="action-button delete-button" onclick="deleteItem(${item.id})">Hapus</button>
         `;
         listContainer.appendChild(itemCard);
     });
@@ -214,29 +220,21 @@ function renderRecipes() {
         // Cek bahan yang ada (available) dan bahan yang kurang (missing)
         const availableCount = recipe.required.filter(ing => availableIngredients.includes(ing)).length;
         const missingIngredients = recipe.required.filter(ing => !availableIngredients.includes(ing));
+        const percentageAvailable = Math.round((availableCount / recipe.required.length) * 100);
 
-        // Jika semua bahan tersedia
-        if (availableCount === recipe.required.length) {
+        if (availableCount > 0) {
             foundRecipes = true;
+            const isComplete = availableCount === recipe.required.length;
+
             const card = document.createElement('div');
             card.className = 'recipe-card';
             card.innerHTML = `
-                <h3>${recipe.name}</h3>
-                <p><strong>Bahan Tersedia:</strong> ${recipe.required.join(', ')}</p>
-                <button class="action-button" style="background-color: var(--color-primary);">Lihat Resep (Semua Bahan Ada!)</button>
-            `;
-            recipeContainer.appendChild(card);
-        } 
-        // Jika hanya beberapa bahan yang kurang
-        else if (availableCount > 0) {
-            foundRecipes = true;
-            const card = document.createElement('div');
-            card.className = 'recipe-card';
-            card.innerHTML = `
-                <h3>${recipe.name}</h3>
-                <p><strong>Bahan Ada (${availableCount}/${recipe.required.length}):</strong> ${recipe.required.filter(ing => availableIngredients.includes(ing)).join(', ')}</p>
-                <p style="color: #e74c3c;"><strong>Bahan Kurang:</strong> ${missingIngredients.join(', ')}</p>
-                <button class="action-button" style="background-color: #3498db;">Lihat Resep (Beli yang Kurang)</button>
+                <h3>${recipe.name} (${percentageAvailable}%)</h3>
+                <p><strong>Bahan Ada:</strong> ${recipe.required.filter(ing => availableIngredients.includes(ing)).map(ing => ing.charAt(0).toUpperCase() + ing.slice(1)).join(', ')}</p>
+                ${!isComplete ? `<p style="color: #e74c3c;"><strong>Bahan Kurang:</strong> ${missingIngredients.map(ing => ing.charAt(0).toUpperCase() + ing.slice(1)).join(', ')}</p>` : ''}
+                <button class="action-button" style="background-color: ${isComplete ? 'var(--color-primary)' : '#3498db'};">
+                    Lihat Resep ${isComplete ? '(Semua Ada!)' : '(Beli yang Kurang)'}
+                </button>
             `;
             recipeContainer.appendChild(card);
         }
@@ -281,6 +279,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Menghubungkan dropdown sortir dengan fungsi renderPantry
     document.getElementById('sort-by').addEventListener('change', renderPantry);
+    
+    // FIX JS: Menghubungkan tombol filter resep
+    document.querySelectorAll('.filter-button').forEach(button => {
+        button.addEventListener('click', function() {
+            filterRecipes(this.getAttribute('data-filter'), this);
+        });
+    });
 
     // Render data saat halaman dimuat
     renderPantry();
