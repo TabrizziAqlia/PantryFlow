@@ -33,9 +33,14 @@ main {
 section {
     background-color: var(--color-white);
     padding: 25px;
-    margin-bottom: 0px; /* Diatur oleh grid gap */
+    margin-bottom: 0px; 
     border-radius: var(--radius-lg);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: var(--color-secondary);
+    font-weight: 700;
 }
 
 /* --------------------------------------------------- */
@@ -92,6 +97,64 @@ header p {
 }
 
 /* --------------------------------------------------- */
+/* WELCOME SECTION (Input Nama dan Motivasi) */
+/* --------------------------------------------------- */
+
+#welcome-section {
+    margin-bottom: 20px;
+    grid-column: 1 / -1; 
+}
+
+#welcome-section h2 {
+    color: var(--color-secondary);
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+#user-name-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+#welcome-message p {
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin-bottom: 5px;
+}
+
+#welcome-message strong {
+    color: var(--color-primary);
+}
+
+.small-text {
+    font-size: 0.85em;
+    margin-top: 10px;
+}
+
+#name-form button {
+    background-color: var(--color-primary); 
+    color: var(--color-white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+#name-form button:hover {
+    background-color: #178a63;
+}
+
+
+/* --------------------------------------------------- */
 /* GRID LAYOUT UTAMA */
 /* --------------------------------------------------- */
 
@@ -102,7 +165,7 @@ header p {
 }
 
 .span-full {
-    grid-column: 1 / span 2; /* Dashboard dan Resep mengambil lebar penuh */
+    grid-column: 1 / span 2; /* Dashboard, Resep, Lokasi mengambil lebar penuh */
 }
 
 /* --------------------------------------------------- */
@@ -134,11 +197,21 @@ button[type="submit"], .action-button {
     transition: background-color 0.3s ease;
     text-align: center;
     text-decoration: none;
+    display: block; /* Agar action-button mengambil lebar penuh card */
 }
 
 button[type="submit"]:hover, .action-button:hover {
     background-color: #178a63;
 }
+
+.map-button {
+    background-color: #3498db !important; /* Biru Maps */
+}
+
+.map-button:hover {
+    background-color: #2980b9 !important;
+}
+
 
 /* --------------------------------------------------- */
 /* PANTRY DASHBOARD (SMART SORTING) */
@@ -285,9 +358,6 @@ button[type="submit"]:hover, .action-button:hover {
     color: var(--color-secondary);
 }
 
-.recipe-card .action-button[style="background-color: #3498db;"] {
-    margin-top: 10px;
-}
 
 /* Footer */
 footer {
