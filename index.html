@@ -17,6 +17,16 @@
     </header>
 
     <main>
+        <section id="welcome-section" class="span-full">
+            <form id="name-form">
+                <h2>Halo! Siapa nama Anda?</h2>
+                <input type="text" id="user-name-input" placeholder="Masukkan nama panggilan Anda..." required>
+                <button type="submit">Mulai Aliran Stok</button>
+            </form>
+            <div id="welcome-message" style="display: none;">
+                </div>
+        </section>
+
         <div class="content-grid">
             
             <section id="input-section">
@@ -51,11 +61,9 @@
                 <div id="impact-metrics">
                     <div class="metric-box">
                         <p class="metric-value" id="total-saved">Rp 0</p>
-                        <p class="metric-label">Total Uang Dihemat (Estimasi)</p>
                     </div>
                     <div class="metric-box">
                         <p class="metric-value" id="items-saved">0</p>
-                        <p class="metric-label">Item Makanan Diselamatkan</p>
                     </div>
                 </div>
             </section>
