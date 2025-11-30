@@ -372,7 +372,6 @@ button[type="submit"]:hover, .action-button:hover {
     border-collapse: collapse;
     margin-top: 15px;
     font-size: 0.95em;
-    /* Hilangkan table-layout: fixed agar kolom bisa menyesuaikan */
 }
 
 .price-table th, .price-table td {
