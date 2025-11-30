@@ -5,10 +5,13 @@
 let pantryItems = [
     // Data stok awal untuk demo
     { name: "Bayam Segar", expDate: "2025-12-03", qty: 1, estimatedPrice: 5000, category: "Sayur Segar Kulkas" },    
-    { name: "Telur Ayam", expDate: "2025-12-08", qty: 10, estimatedPrice: 24000, category: "Susu/Telur Kulkas" }, 
-    { name: "Susu UHT Kotak", expDate: "2025-12-05", qty: 2, estimatedPrice: 15000, category: "Susu/Telur Kulkas" }, 
+    { name: "Telur Ayam Ras", expDate: "2025-12-08", qty: 10, estimatedPrice: 24000, category: "Susu/Telur Kulkas" }, 
+    { name: "Susu Kental Manis", expDate: "2025-12-05", qty: 2, estimatedPrice: 15000, category: "Susu/Telur Kulkas" }, 
     { name: "Keju Cheddar", expDate: "2025-12-18", qty: 1, estimatedPrice: 15000, category: "Bahan Kering" },   
-    { name: "Beras 5kg", expDate: "2026-06-15", qty: 1, estimatedPrice: 65000, category: "Bahan Kering" }      
+    { name: "Beras Medium", expDate: "2026-06-15", qty: 1, estimatedPrice: 65000, category: "Bahan Kering" },
+    // Bahan tambahan untuk demo resep baru
+    { name: "Wortel", expDate: "2025-12-07", qty: 2, estimatedPrice: 10000, category: "Sayur Segar Kulkas" },
+    { name: "Tempe", expDate: "2025-12-04", qty: 1, estimatedPrice: 6000, category: "Sayur Segar Kulkas" },
 ];
 
 let itemsSaved = 0; 
@@ -17,52 +20,100 @@ let currentFilter = 'all';
 let userName = localStorage.getItem('pantryflowUserName');
 
 
-// --- DATABASE RESEP DUMMY (tetap sama) ---
+// --- DATABASE RESEP DUMMY (DIPERBARUI: 15 Resep) ---
 const recipeDatabase = [
     { 
         name: "Omelet Sayur Bumbu Dasar", 
-        ingredients: ["Telur Ayam", "Bayam Segar"], 
+        ingredients: ["Telur Ayam Ras", "Bayam Segar"], 
         tags: ["quick", "kost"], 
         cookpadLink: "https://cookpad.com/id/resep/23940635" 
     },
     { 
         name: "Nasi Goreng Sederhana", 
-        ingredients: ["Telur Ayam", "Beras 5kg"], 
+        ingredients: ["Telur Ayam Ras", "Beras Medium"], 
         tags: ["quick", "kost"], 
         cookpadLink: "https://cookpad.com/id/resep/25185952" 
     },
     { 
         name: "Susu Keju Panggang", 
-        ingredients: ["Susu UHT Kotak", "Keju Cheddar"], 
+        ingredients: ["Susu Kental Manis", "Keju Cheddar"], 
         tags: ["kost"], 
         cookpadLink: "https://cookpad.com/id/resep/24736305" 
     },
     { 
         name: "Tumis Kangkung Pedas", 
-        ingredients: ["Kangkung", "Bayam Segar"], 
+        ingredients: ["Kangkung", "Bawang Putih", "Cabai Rawit Merah"], // Bahan diperluas
         tags: ["quick"], 
         cookpadLink: "https://cookpad.com/id/resep/11223344" 
     },
     { 
         name: "Nasi Gila Anak Kost", 
-        ingredients: ["Telur Ayam", "Beras 5kg", "Keju Cheddar"], 
+        ingredients: ["Telur Ayam Ras", "Beras Medium", "Sosis Ayam"], // Bahan diperluas
         tags: ["kost", "quick"], 
         cookpadLink: "https://cookpad.com/id/resep/15656236" 
     },
     { 
         name: "Sup Ayam Rempah", 
-        ingredients: ["Keju Cheddar", "Beras 5kg"], 
-        tags: ["all"], 
+        ingredients: ["Daging Ayam Ras", "Wortel", "Kentang"], 
+        tags: ["all", "local"], 
         cookpadLink: "https://cookpad.com/id/resep/55667788" 
     },
     { 
         name: "Salad Sayur Segar", 
-        ingredients: ["Bayam Segar", "Keju Cheddar"], 
+        ingredients: ["Bayam Segar", "Kol/Kubis", "Tomat"], 
         tags: ["all"], 
         cookpadLink: "https://cookpad.com/id/resep/25176969" 
     },
+    // --- 8 Resep Baru Tambahan (Total 15 Resep) ---
+    { 
+        name: "Sayur Sop Komplit", 
+        ingredients: ["Wortel", "Kentang", "Kol/Kubis", "Daging Ayam Ras"], 
+        tags: ["local"], 
+        cookpadLink: "https://cookpad.com/id/resep/15414341" 
+    },
+    { 
+        name: "Tumis Tempe Kecap", 
+        ingredients: ["Tempe", "Bawang Merah", "Kecap Manis"], 
+        tags: ["quick", "kost"], 
+        cookpadLink: "https://cookpad.com/id/resep/25686523" 
+    },
+    { 
+        name: "Telur Ceplok Balado", 
+        ingredients: ["Telur Ayam Ras", "Cabai Merah Keriting", "Bawang Putih"], 
+        tags: ["quick", "kost"], 
+        cookpadLink: "https://cookpad.com/id/resep/24646549" 
+    },
+    { 
+        name: "Opor Ayam Sederhana", 
+        ingredients: ["Daging Ayam Ras", "Santan Instan", "Bawang Merah"], 
+        tags: ["all", "local"], 
+        cookpadLink: "https://cookpad.com/id/resep/24584218" 
+    },
+    { 
+        name: "Pecel Lele Sambal Terasi", 
+        ingredients: ["Ikan Lele", "Cabai Rawit Merah", "Tomat"], 
+        tags: ["local"], 
+        cookpadLink: "https://cookpad.com/id/resep/12345678" 
+    },
+    { 
+        name: "Sayur Bening Bayam Jagung", 
+        ingredients: ["Bayam Segar", "Jagung Pipilan Kering", "Garam Beryodium"], 
+        tags: ["local", "quick"], 
+        cookpadLink: "https://cookpad.com/id/resep/25232323" 
+    },
+    { 
+        name: "Nasi Uduk Magic Com", 
+        ingredients: ["Beras Medium", "Garam Beryodium", "Santan Instan"], 
+        tags: ["kost"], 
+        cookpadLink: "https://cookpad.com/id/resep/18181818" 
+    },
+    { 
+        name: "Gulai Ikan Tongkol", 
+        ingredients: ["Ikan Tongkol Segar", "Santan Instan", "Bawang Merah"], 
+        tags: ["all"], 
+        cookpadLink: "https://cookpad.com/id/resep/19191919" 
+    },
 ];
-
 // --- DATABASE LOKASI REKOMENDASI (tetap sama) ---
 const locationDatabase = [
     {
@@ -85,48 +136,75 @@ const locationDatabase = [
     }
 ];
 
-// --- DATABASE HARGA BAHAN POKOK (Rata-rata Harga Pasar Jatim) ---
+
+// --- DATABASE HARGA BAHAN POKOK (40 Item - DIPERBARUI) ---
 const PRICE_GUIDE = [
-    // PROTEIN & OLAHAN
-    { name: "Daging Ayam Ras", unit: "kg", price: 36000, color: "#e74c3c" },
-    { name: "Telur Ayam Ras", unit: "kg", price: 28000, color: "#f39c12" },
-    { name: "Ikan Bandeng", unit: "kg", price: 34000, color: "#3498db" },
-    { name: "Ikan Lele", unit: "kg", price: 26000, color: "#3498db" },
-    { name: "Ikan Tongkol Segar", unit: "kg", price: 36000, color: "#3498db" },
-    { name: "Ikan Asin Teri", unit: "kg", price: 77000, color: "#3498db" },
-    { name: "Susu Kental Manis", unit: "370 gr/kl", price: 12500, color: "#9b59b6" },
-    { name: "Daging Sapi (Paha)", unit: "kg", price: 119000, color: "#e74c3c" },
+    // PROTEIN & OLAHAN (14 Item)
+    { name: "Daging Ayam Ras", unit: "kg", price: 36000, color: "#e74c3c", shopLink: "https://shopee.co.id/Daging-Ayam-Segar-termurah" },
+    { name: "Telur Ayam Ras", unit: "kg", price: 28000, color: "#f39c12", shopLink: "https://tokopedia.com/telur-ayam-ras-murah-jatim" },
+    { name: "Ikan Bandeng", unit: "kg", price: 34000, color: "#3498db", shopLink: "https://lazada.co.id/ikan-bandeng-segar" },
+    { name: "Ikan Lele", unit: "kg", price: 26000, color: "#3498db", shopLink: "https://shopee.co.id/lele-segar-peternak-lokal" },
+    { name: "Ikan Tongkol Segar", unit: "kg", price: 36000, color: "#3498db", shopLink: "https://tokopedia.com/ikan-tongkol-murah" },
+    { name: "Ikan Asin Teri", unit: "kg", price: 77000, color: "#3498db", shopLink: "https://lazada.co.id/ikan-asin-teri-premium" },
+    { name: "Susu Kental Manis", unit: "370 gr/kl", price: 12500, color: "#9b59b6", shopLink: "https://shopee.co.id/susu-kental-manis-ekonomis" },
+    { name: "Daging Sapi (Paha)", unit: "kg", price: 119000, color: "#e74c3c", shopLink: "https://tokopedia.com/daging-sapi-paha-murah" },
+    // --- Tambahan Protein/Olahannya ---
+    { name: "Tahu Putih", unit: "10 pcs", price: 7500, color: "#27ae60", shopLink: "https://shopee.co.id/tahu-putih-mentah-murah" },
+    { name: "Tempe", unit: "Papan besar", price: 6000, color: "#27ae60", shopLink: "https://tokopedia.com/tempe-mentah-papan-besar" },
+    { name: "Sosis Ayam", unit: "500 gr", price: 18000, color: "#f39c12", shopLink: "https://lazada.co.id/sosis-ayam-frozen-murah" },
+    { name: "Kornet Sapi Kaleng", unit: "198 gr", price: 23000, color: "#f39c12", shopLink: "https://shopee.co.id/kornet-sapi-kaleng-promo" },
+    { name: "Susu UHT Kotak", unit: "1L", price: 18000, color: "#9b59b6", shopLink: "https://tokopedia.com/susu-uht-1l-murah" },
+    { name: "Keju Cheddar", unit: "200 gr", price: 22000, color: "#f39c12", shopLink: "https://lazada.co.id/keju-cheddar-batang" },
 
-    // KARBOHIDRAT & POKOK
-    { name: "Beras Medium", unit: "kg", price: 12850, color: "#27ae60" },
-    { name: "Tepung Terigu", unit: "kg", price: 11500, color: "#27ae60" },
-    { name: "Jagung Pipilan Kering", unit: "kg", price: 7650, color: "#27ae60" },
-    { name: "Ketela Pohon", unit: "kg", price: 5000, color: "#27ae60" },
-    { name: "Indomie Kari Ayam", unit: "bungkus", price: 3600, color: "#f39c12" },
 
-    // MINYAK & GULA
-    { name: "Minyak Goreng Curah", unit: "liter", price: 18700, color: "#f39c12" },
-    { name: "Minyakita", unit: "liter", price: 16700, color: "#27ae60" },
-    { name: "Gula Kristal Putih", unit: "kg", price: 16400, color: "#f39c12" },
+    // KARBOHIDRAT & POKOK (9 Item)
+    { name: "Beras Medium", unit: "kg", price: 12850, color: "#27ae60", shopLink: "https://tokopedia.com/beras-medium-curah-jatim" },
+    { name: "Tepung Terigu", unit: "kg", price: 11500, color: "#27ae60", shopLink: "https://lazada.co.id/tepung-terigu-serbaguna-1kg" },
+    { name: "Jagung Pipilan Kering", unit: "kg", price: 7650, color: "#27ae60", shopLink: "https://shopee.co.id/jagung-pipilan-kering" },
+    { name: "Ketela Pohon", unit: "kg", price: 5000, color: "#27ae60", shopLink: "https://tokopedia.com/ketela-pohon-singkong-murah" },
+    { name: "Indomie Kari Ayam", unit: "bungkus", price: 3600, color: "#f39c12", shopLink: "https://lazada.co.id/indomie-kari-ayam-grosir" },
+    // --- Tambahan Karbo/Pokok ---
+    { name: "Mie Telur Kering", unit: "500 gr", price: 13000, color: "#f39c12", shopLink: "https://shopee.co.id/mie-telur-kering-grosir" },
+    { name: "Roti Tawar", unit: "bungkus", price: 15000, color: "#9b59b6", shopLink: "https://tokopedia.com/roti-tawar-fresh" },
+    { name: "Gandum Utuh", unit: "kg", price: 18000, color: "#27ae60", shopLink: "https://lazada.co.id/gandum-utuh-1kg" },
+    { name: "Oatmeal Instan", unit: "200 gr", price: 12000, color: "#f39c12", shopLink: "https://shopee.co.id/oatmeal-instan-murah" },
 
-    // BUMBU & REMPAH
-    { name: "Bawang Putih", unit: "kg", price: 30200, color: "#9b59b6" },
-    { name: "Bawang Merah", unit: "kg", price: 40100, color: "#9b59b6" },
-    { name: "Cabai Rawit Merah", unit: "kg", price: 45800, color: "#e74c3c" },
-    { name: "Cabai Merah Keriting", unit: "kg", price: 48400, color: "#e74c3c" },
-    { name: "Garam Beryodium", unit: "kg", price: 9400, color: "#9b59b6" },
+    // MINYAK & GULA (3 Item)
+    { name: "Minyak Goreng Curah", unit: "liter", price: 18700, color: "#f39c12", shopLink: "https://tokopedia.com/minyak-goreng-curah-termurah" },
+    { name: "Minyakita", unit: "liter", price: 16700, color: "#27ae60", shopLink: "https://lazada.co.id/minyakita-1l" },
+    { name: "Gula Kristal Putih", unit: "kg", price: 16400, color: "#f39c12", shopLink: "https://shopee.co.id/gula-pasir-termurah-1kg" },
 
-    // SAYURAN
-    { name: "Tomat", unit: "kg", price: 11650, color: "#27ae60" },
-    { name: "Kol/Kubis", unit: "kg", price: 7150, color: "#27ae60" },
-    { name: "Kentang", unit: "kg", price: 15000, color: "#27ae60" },
-    { name: "Wortel", unit: "kg", price: 14200, color: "#27ae60" },
-    { name: "Buncis", unit: "kg", price: 12150, color: "#27ae60" },
+    // BUMBU & REMPAH (10 Item)
+    { name: "Bawang Putih", unit: "kg", price: 30200, color: "#9b59b6", shopLink: "https://tokopedia.com/bawang-putih-kiloan" },
+    { name: "Bawang Merah", unit: "kg", price: 40100, color: "#9b59b6", shopLink: "https://lazada.co.id/bawang-merah-fresh-1kg" },
+    { name: "Cabai Rawit Merah", unit: "kg", price: 45800, color: "#e74c3c", shopLink: "https://shopee.co.id/cabe-rawit-merah-pasar" },
+    { name: "Cabai Merah Keriting", unit: "kg", price: 48400, color: "#e74c3c", shopLink: "https://tokopedia.com/cabe-merah-keriting" },
+    { name: "Garam Beryodium", unit: "kg", price: 9400, color: "#9b59b6", shopLink: "https://lazada.co.id/garam-beryodium-termurah" },
+    // --- Tambahan Bumbu/Rempah ---
+    { name: "Kecap Manis", unit: "600 ml", price: 23000, color: "#f39c12", shopLink: "https://shopee.co.id/kecap-manis-refill-besar" },
+    { name: "Saus Sambal", unit: "340 ml", price: 10500, color: "#e74c3c", shopLink: "https://tokopedia.com/saus-sambal-murah" },
+    { name: "Lada Bubuk", unit: "sachet", price: 500, color: "#9b59b6", shopLink: "https://lazada.co.id/lada-bubuk-sachet-grosir" },
+    { name: "Kaldu Ayam Bubuk", unit: "sachet", price: 800, color: "#9b59b6", shopLink: "https://shopee.co.id/kaldu-ayam-sachet-ekonomis" },
+    { name: "Gula Merah", unit: "kg", price: 18000, color: "#f39c12", shopLink: "https://tokopedia.com/gula-merah-batok-1kg" },
 
-    // KACANG-KACANGAN
-    { name: "Kacang Kedelai Impor", unit: "kg", price: 12550, color: "#9b59b6" },
-    { name: "Kacang Hijau", unit: "kg", price: 23350, color: "#9b59b6" },
-    { name: "Kacang Tanah", unit: "kg", price: 29250, color: "#9b59b6" },
+    // SAYURAN & PELENGKAP (10 Item)
+    { name: "Tomat", unit: "kg", price: 11650, color: "#27ae60", shopLink: "https://tokopedia.com/tomat-sayur-segar" },
+    { name: "Kol/Kubis", unit: "kg", price: 7150, color: "#27ae60", shopLink: "https://lazada.co.id/kol-kubis-murah" },
+    { name: "Kentang", unit: "kg", price: 15000, color: "#27ae60", shopLink: "https://shopee.co.id/kentang-kiloan-sayur" },
+    { name: "Wortel", unit: "kg", price: 14200, color: "#27ae60", shopLink: "https://tokopedia.com/wortel-sayur-murah" },
+    { name: "Buncis", unit: "kg", price: 12150, color: "#27ae60", shopLink: "https://lazada.co.id/buncis-segar-1kg" },
+    // --- Tambahan Sayuran/Pelengkap ---
+    { name: "Sawi Hijau", unit: "ikat", price: 4000, color: "#27ae60", shopLink: "https://shopee.co.id/sawi-hijau-pasar-lokal" },
+    { name: "Kangkung", unit: "ikat", price: 4000, color: "#27ae60", shopLink: "https://tokopedia.com/kangkung-ikat-segar" },
+    { name: "Daun Bawang", unit: "ikat", price: 6000, color: "#27ae60", shopLink: "https://lazada.co.id/daun-bawang-fresh" },
+    { name: "Santan Instan", unit: "65 ml", price: 3500, color: "#9b59b6", shopLink: "https://shopee.co.id/santan-instan-kecil" },
+    { name: "Bayam Segar", unit: "ikat", price: 5000, color: "#27ae60", shopLink: "https://tokopedia.com/bayam-segar-murah" }, // Pindahkan Bayam ke sini
+
+    // KACANG-KACANGAN (4 Item)
+    { name: "Kacang Kedelai Impor", unit: "kg", price: 12550, color: "#9b59b6", shopLink: "https://shopee.co.id/kacang-kedelai-impor-murah" },
+    { name: "Kacang Hijau", unit: "kg", price: 23350, color: "#9b59b6", shopLink: "https://tokopedia.com/kacang-hijau-1kg" },
+    { name: "Kacang Tanah", unit: "kg", price: 29250, color: "#9b59b6", shopLink: "https://lazada.co.id/kacang-tanah-grosir" },
+    { name: "Kacang Panjang", unit: "kg", price: 16000, color: "#27ae60", shopLink: "https://shopee.co.id/kacang-panjang-segar-murah" },
 ];
 
 
@@ -226,7 +304,7 @@ function renderPantry() {
     updateImpactMetrics();
 }
 
-/** Merender daftar Resep Rekomendasi Minimum-Waste (Logika tetap sama) */
+/** Merender daftar Resep Rekomendasi Minimum-Waste */
 function renderRecipes() {
     const outputContainer = document.getElementById('recipe-output');
     outputContainer.innerHTML = '';
@@ -247,38 +325,45 @@ function renderRecipes() {
     });
 
     // 4. Terapkan Filter Kategori (kost, quick, local) dan Prioritas
-    if (currentFilter !== 'all') {
-        // Hanya tampilkan resep yang sesuai dengan tag dan menggunakan bahan mendesak
-        filteredRecipes = filteredRecipes.filter(recipe => {
-            const matchesTag = recipe.tags.includes(currentFilter);
-            const usesUrgentItem = recipe.ingredients.some(ing => urgentNames.includes(ing));
-            return matchesTag && usesUrgentItem;
-        });
-    }
+    let displayedRecipes = filteredRecipes.filter(recipe => {
+        const matchesTag = currentFilter === 'all' || recipe.tags.includes(currentFilter);
+        const usesUrgentItem = recipe.ingredients.some(ing => urgentNames.includes(ing));
+        // Jika filter "all", prioritaskan yang menggunakan urgent item
+        // Jika filter spesifik, harus sesuai tag DAN memiliki bahan mendesak
+        return matchesTag && (currentFilter === 'all' ? true : usesUrgentItem);
+    });
 
-    // 5. Urutkan berdasarkan penggunaan stok mendesak (prioritas)
+    // 5. Urutkan: PRIORITASKAN resep yang menggunakan stok mendesak
     if (urgentNames.length > 0) {
-        filteredRecipes.sort((a, b) => {
-             const aUrgent = a.ingredients.some(ing => urgentNames.includes(ing));
-             const bUrgent = b.ingredients.some(ing => urgentNames.includes(ing));
-             // Pindah resep dengan bahan mendesak ke atas
-             return (bUrgent === aUrgent) ? 0 : (bUrgent ? -1 : 1); 
+        displayedRecipes.sort((a, b) => {
+             const aUrgentScore = a.ingredients.filter(ing => urgentNames.includes(ing)).length;
+             const bUrgentScore = b.ingredients.filter(ing => urgentNames.includes(ing)).length;
+             // Urutkan dari skor mendesak tertinggi
+             return bUrgentScore - aUrgentScore; 
         });
     }
 
-    // 6. Rendering Hasil
+    // 6. Batasi hingga 15 resep
+    displayedRecipes = displayedRecipes.slice(0, 15);
+
+    // 7. Rendering Hasil
     const gridContainer = document.createElement('div');
     gridContainer.className = 'recipe-output-grid';
 
-    if (filteredRecipes.length > 0) {
-        filteredRecipes.forEach(recipe => {
+    if (displayedRecipes.length > 0) {
+        displayedRecipes.forEach(recipe => {
             const recipeCard = document.createElement('div');
             recipeCard.className = 'recipe-card';
             
-            const savedIngredients = recipe.ingredients.filter(ing => urgentNames.includes(ing)).join(', ');
-            const urgentText = savedIngredients ? 
-                                `<strong>Bahan Mendesak:</strong> ${savedIngredients}` : 
-                                `<em>Bahan Tersedia: Stok Aman</em>`;
+            const savedIngredients = recipe.ingredients.filter(ing => urgentNames.includes(ing));
+            const savedCount = savedIngredients.length;
+            
+            let urgentText;
+            if (savedCount > 0) {
+                urgentText = `⭐ **${savedCount} Bahan Mendesak** akan terselamatkan: ${savedIngredients.join(', ')}`;
+            } else {
+                urgentText = `<em>Bahan Tersedia: Stok Aman</em>`;
+            }
 
             recipeCard.innerHTML = `
                 <h3>${recipe.name}</h3>
@@ -290,8 +375,8 @@ function renderRecipes() {
         });
         outputContainer.appendChild(gridContainer);
     } else {
-        const filterName = currentFilter === 'all' ? 'Semua Kategori' : `Kategori ${currentFilter}`;
-        outputContainer.innerHTML = `<div class="recipe-card span-full"><p>Tidak ada resep yang semua bahannya tersedia di Pantry Anda pada ${filterName}, atau tidak ada yang menggunakan stok mendesak.</p></div>`;
+        const filterName = currentFilter === 'all' ? 'Semua Kategori' : `Kategori **${currentFilter.toUpperCase()}**`;
+        outputContainer.innerHTML = `<div class="recipe-card span-full"><p>Tidak ada resep yang semua bahannya tersedia di Pantry Anda pada ${filterName}. Tambahkan stok bahan untuk mendapatkan rekomendasi!</p></div>`;
     }
 }
 
@@ -316,7 +401,7 @@ function renderLocations() {
     });
 }
 
-/** Merender daftar harga bahan makanan (Fungsi Baru) */
+/** Merender daftar harga bahan makanan (DIPERBARUI DENGAN LINK BELANJA) */
 function renderPriceList() {
     const outputContainer = document.getElementById('price-list-output');
     outputContainer.innerHTML = '';
@@ -328,7 +413,8 @@ function renderPriceList() {
                 <tr>
                     <th>Bahan Makanan</th>
                     <th>Satuan</th>
-                    <th>Harga Rata-rata</th>
+                    <th class="text-right">Harga Rata-rata</th>
+                    <th class="text-center">Toko Online Termurah</th>
                 </tr>
             </thead>
             <tbody>
@@ -342,7 +428,10 @@ function renderPriceList() {
             <tr>
                 <td><span style="color: ${item.color};">•</span> ${item.name}</td>
                 <td>${item.unit}</td>
-                <td><strong>${formattedPrice}</strong></td>
+                <td class="text-right"><strong>${formattedPrice}</strong></td>
+                <td class="text-center">
+                    <a href="${item.shopLink}" target="_blank" class="shop-link">Cek Harga 🛒</a>
+                </td>
             </tr>
         `;
     });
