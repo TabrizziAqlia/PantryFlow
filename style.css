@@ -160,6 +160,7 @@ button[type="submit"]:hover, .action-button:hover {
     width: 100%; /* Penting untuk empty message */
 }
 
+/* FIX UTAMA: Menambahkan border-style dan border-width di item-card agar warna status muncul */
 .item-card {
     padding: 15px;
     border-radius: 10px;
@@ -168,6 +169,9 @@ button[type="submit"]:hover, .action-button:hover {
     font-size: 0.9em;
     transition: transform 0.2s;
     position: relative;
+    /* PROPERTI YANG DIPERBAIKI */
+    border-style: solid; 
+    border-width: 2px;
 }
 
 .item-card:hover {
@@ -180,22 +184,22 @@ button[type="submit"]:hover, .action-button:hover {
     margin-bottom: 5px;
 }
 
-/* LOGIKA VISUAL WARNA PERINGATAN */
+/* LOGIKA VISUAL WARNA PERINGATAN (Menggunakan border-color) */
 .status-merah { 
     background-color: #ffe6e6; 
-    border: 2px solid #e74c3c; 
+    border-color: #e74c3c;    /* Border Merah */
     color: #e74c3c;
 }
 
 .status-kuning { 
     background-color: #fff9e6;
-    border: 2px solid #f39c12; 
+    border-color: #f39c12;    /* Border Kuning/Oranye */
     color: #f39c12;
 }
 
 .status-hijau { 
     background-color: #e6ffe6;
-    border: 2px solid #27ae60;
+    border-color: #27ae60;    /* Border Hijau */
     color: #27ae60;
 }
 
@@ -205,13 +209,13 @@ button[type="submit"]:hover, .action-button:hover {
     margin-top: 5px;
 }
 
-/* *** TAMBAHAN: STYLES UNTUK PESAN KOSONG PANTRY (Lebih Rapi) *** */
+/* STYLES UNTUK PESAN KOSONG PANTRY */
 .empty-message {
     width: 100%;
     padding: 30px;
     text-align: center;
     background-color: #fff;
-    border: 2px dashed #95a5a6; /* Border abu-abu putus-putus */
+    border: 2px dashed #95a5a6; 
     border-radius: 10px;
     color: #666;
     margin: 20px auto;
@@ -222,12 +226,12 @@ button[type="submit"]:hover, .action-button:hover {
     margin-top: 0;
 }
 
-/* *** TAMBAHAN: STYLES UNTUK PESAN KOSONG RESEP (Lebih Rapi) *** */
+/* STYLES UNTUK PESAN KOSONG RESEP */
 .empty-message-recipe {
     width: 100%;
     padding: 30px;
     text-align: center;
-    background-color: #ecf0f1; /* Warna abu-abu yang lebih terang */
+    background-color: #ecf0f1; 
     border: 1px solid #bdc3c7;
     border-radius: 8px;
     color: #34495e;
@@ -316,7 +320,6 @@ button[type="submit"]:hover, .action-button:hover {
     color: var(--color-secondary);
 }
 
-/* Styling specifically for the Maps button to differentiate */
 .recipe-card .action-button[style*="background-color: #3498db;"] {
     margin-top: 10px;
 }
@@ -335,7 +338,7 @@ footer {
 /* --------------------------------------------------- */
 @media (max-width: 1024px) {
     .content-grid {
-        grid-template-columns: 1fr; /* Kolom tunggal di layar tablet/kecil */
+        grid-template-columns: 1fr; 
     }
     .span-full {
         grid-column: 1;
