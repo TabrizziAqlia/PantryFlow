@@ -1,26 +1,25 @@
 // ===================================================
-//  GLOBAL DATA & CONFIGURATION (Lengkap)
+//  GLOBAL DATA & CONFIGURATION
 // ===================================================
 
 let pantryItems = [
-    // Data stok awal untuk demo
-    { name: "Bayam Segar", expDate: "2025-12-03", qty: 1, estimatedPrice: 5000, category: "Sayur Segar Kulkas" },    
-    { name: "Telur Ayam Ras", expDate: "2025-12-08", qty: 10, estimatedPrice: 24000, category: "Susu/Telur Kulkas" }, 
-    { name: "Susu Kental Manis", expDate: "2025-12-05", qty: 2, estimatedPrice: 15000, category: "Susu/Telur Kulkas" }, 
-    { name: "Keju Cheddar", expDate: "2025-12-18", qty: 1, estimatedPrice: 15000, category: "Bahan Kering" },   
-    { name: "Beras Medium", expDate: "2026-06-15", qty: 1, estimatedPrice: 65000, category: "Bahan Kering" },
-    // Bahan tambahan untuk demo resep baru
-    { name: "Wortel", expDate: "2025-12-07", qty: 2, estimatedPrice: 10000, category: "Sayur Segar Kulkas" },
-    { name: "Tempe", expDate: "2025-12-04", qty: 1, estimatedPrice: 6000, category: "Sayur Segar Kulkas" },
+    // Data stok awal untuk demo (estimatedPrice dihapus)
+    { name: "Bayam Segar", expDate: "2025-12-03", qty: 1, category: "Sayur Segar Kulkas" },    
+    { name: "Telur Ayam Ras", expDate: "2025-12-08", qty: 10, category: "Susu/Telur Kulkas" }, 
+    { name: "Susu Kental Manis", expDate: "2025-12-05", qty: 2, category: "Susu/Telur Kulkas" }, 
+    { name: "Keju Cheddar", expDate: "2025-12-18", qty: 1, category: "Bahan Kering" },   
+    { name: "Beras Medium", expDate: "2026-06-15", qty: 1, category: "Bahan Kering" },
+    { name: "Wortel", expDate: "2025-12-07", qty: 2, category: "Sayur Segar Kulkas" },
+    { name: "Tempe", expDate: "2025-12-04", qty: 1, category: "Sayur Segar Kulkas" },
 ];
 
 let itemsSaved = 0; 
-const ITEM_PRICE_AVG = 10000; 
+const ITEM_PRICE_AVG = 10000; // Harga rata-rata per item yang diselamatkan
 let currentFilter = 'all'; 
 let userName = localStorage.getItem('pantryflowUserName');
 
 
-// --- DATABASE RESEP DUMMY (15 Resep) ---
+// --- DATABASE RESEP DUMMY (TOTAL 15 Resep) ---
 const recipeDatabase = [
     { 
         name: "Omelet Sayur Bumbu Dasar", 
@@ -64,6 +63,7 @@ const recipeDatabase = [
         tags: ["all"], 
         cookpadLink: "https://cookpad.com/id/resep/25176969" 
     },
+    // --- 8 Resep Baru Tambahan (Total 15 Resep) ---
     { 
         name: "Sayur Sop Komplit", 
         ingredients: ["Wortel", "Kentang", "Kol/Kubis", "Daging Ayam Ras"], 
@@ -114,7 +114,81 @@ const recipeDatabase = [
     },
 ];
 
-// --- DATABASE LOKASI REKOMENDASI ---
+// --- DATABASE VIDEO RESEP ANAK KOST (TOTAL 10 Video) ---
+const videoDatabase = [
+    { 
+        title: "5 Resep Olahan Telur Simple", 
+        link: "https://www.youtube.com/embed/j_8j0W1FpB0", 
+        source: "YouTube",
+        embed: true, // Untuk YouTube, gunakan iframe embed
+        desc: "Resep olahan telur cepat, cocok untuk menghemat stok telur mendekati kedaluwarsa."
+    },
+    { 
+        title: "Masak Mie Instan Ala Carbonara", 
+        link: "https://www.youtube.com/embed/xL2yP8T4o3c", 
+        source: "YouTube",
+        embed: true,
+        desc: "Upgrade menu mie instan Anda! Cepat saji dan murah meriah."
+    },
+    { 
+        title: "Tumis Sayur Cuma 10 Ribu", 
+        link: "https://www.youtube.com/embed/a9n_f-2-Tgg", 
+        source: "YouTube",
+        embed: true,
+        desc: "Cara mengolah sayur segar sebelum layu, modal sangat minim."
+    },
+    { 
+        title: "Nasi Liwet Rice Cooker 1 Porsi", 
+        link: "https://www.youtube.com/embed/L7h0vNq0lK8", 
+        source: "YouTube",
+        embed: true,
+        desc: "Memasak nasi liwet porsi anak kos dengan rice cooker."
+    },
+    { 
+        title: "Resep Ayam Goreng Bumbu Instan", 
+        link: "https://www.youtube.com/embed/zO9a7Z-6W-k", 
+        source: "YouTube",
+        embed: true,
+        desc: "Penyelamat daging ayam di kulkas dengan bumbu instan."
+    },
+    { 
+        title: "Roti Tawar Siram Keju Praktis", 
+        link: "https://vt.tiktok.com/ZSNLfX1X8/", 
+        source: "TikTok-Style",
+        embed: false, // Untuk TikTok/link eksternal, tidak menggunakan iframe
+        desc: "Snack/sarapan cepat dari roti tawar dan keju sisa."
+    },
+    { 
+        title: "Mie Kuah Cabai Merah Viral", 
+        link: "https://vt.tiktok.com/ZSNLfX6Ea/", 
+        source: "TikTok-Style",
+        embed: false,
+        desc: "Menu pedas cepat dari mie dan cabai rawit/keriting."
+    },
+    { 
+        title: "Bikin Sambal Bawang Awet Seminggu", 
+        link: "https://vt.tiktok.com/ZSNLfXD4b/", 
+        source: "TikTok-Style",
+        embed: false,
+        desc: "Mengolah bawang dan cabai yang banyak agar tidak busuk."
+    },
+    { 
+        title: "Telur Dadar Sayur Super Tebal", 
+        link: "https://vt.tiktok.com/ZSNLfX9Yp/", 
+        source: "TikTok-Style",
+        embed: false,
+        desc: "Telur dadar tebal, kenyang untuk menu sarapan atau makan malam."
+    },
+    { 
+        title: "Nasi Orak-Arik Sayur Pedas", 
+        link: "https://vt.tiktok.com/ZSNLfXB4c/", 
+        source: "TikTok-Style",
+        embed: false,
+        desc: "Nasi sisa dicampur sayur dan telur agar tidak terbuang."
+    },
+];
+
+// --- DATABASE LOKASI REKOMENDASI (tetap sama) ---
 const locationDatabase = [
     {
         name: "Pasar Karah",
@@ -137,7 +211,7 @@ const locationDatabase = [
 ];
 
 
-// --- DATABASE HARGA BAHAN POKOK (40 Item) ---
+// --- DATABASE HARGA BAHAN POKOK (40 Item - DIPERBARUI) ---
 const PRICE_GUIDE = [
     // PROTEIN & OLAHAN (14 Item)
     { name: "Daging Ayam Ras", unit: "kg", price: 36000, color: "#e74c3c", shopLink: "https://shopee.co.id/Daging-Ayam-Segar-termurah" },
@@ -194,7 +268,7 @@ const PRICE_GUIDE = [
     { name: "Kangkung", unit: "ikat", price: 4000, color: "#27ae60", shopLink: "https://tokopedia.com/kangkung-ikat-segar" },
     { name: "Daun Bawang", unit: "ikat", price: 6000, color: "#27ae60", shopLink: "https://lazada.co.id/daun-bawang-fresh" },
     { name: "Santan Instan", unit: "65 ml", price: 3500, color: "#9b59b6", shopLink: "https://shopee.co.id/santan-instan-kecil" },
-    { name: "Bayam Segar", unit: "ikat", price: 5000, color: "#27ae60", shopLink: "https://tokopedia.com/bayam-segar-murah" },
+    { name: "Bayam Segar", unit: "ikat", price: 5000, color: "#27ae60", shopLink: "https://tokopedia.com/bayam-segar-murah" }, 
 
     // KACANG-KACANGAN (4 Item)
     { name: "Kacang Kedelai Impor", unit: "kg", price: 12550, color: "#9b59b6", shopLink: "https://shopee.co.id/kacang-kedelai-impor-murah" },
@@ -238,7 +312,6 @@ function getStatusClass(days) {
 
 /** Memperbarui metrik Dampak Saya */
 function updateImpactMetrics() {
-    // Diasumsikan rata-rata item terselamatkan 50% dari harga rata-rata
     const totalSavedValue = itemsSaved * ITEM_PRICE_AVG; 
     document.getElementById('total-saved').textContent = `Rp ${totalSavedValue.toLocaleString('id-ID')}`;
     document.getElementById('items-saved').textContent = itemsSaved;
@@ -253,11 +326,8 @@ function simulateCookingAndImpact(itemCount = 1) {
 // Event listener untuk tombol 'Masak Resep Ini'
 document.addEventListener('click', function(e) {
     if (e.target && e.target.classList.contains('action-button')) {
-        // Hanya memicu simulasi jika tombol masak
         if (e.target.textContent.indexOf('Masak Resep Ini') !== -1) {
-             // Simulasi item yang dimasak (misalnya 2 item)
              simulateCookingAndImpact(2); 
-             // Opsi: Tambahkan feedback visual bahwa item telah digunakan
         }
     }
 });
@@ -297,6 +367,7 @@ function renderPantry() {
         listContainer.appendChild(itemCard);
     });
     renderRecipes(); 
+    renderVideos(); // Panggil render videos setelah render pantry
     updateImpactMetrics();
 }
 
@@ -323,11 +394,13 @@ function renderRecipes() {
     // 4. Terapkan Filter Kategori (kost, quick, local) dan Prioritas
     let displayedRecipes = filteredRecipes.filter(recipe => {
         const matchesTag = currentFilter === 'all' || recipe.tags.includes(currentFilter);
-        // Jika filter spesifik, harus sesuai tag
-        return matchesTag; 
+        const usesUrgentItem = recipe.ingredients.some(ing => urgentNames.includes(ing));
+        // Jika filter "all", prioritaskan yang menggunakan urgent item
+        // Jika filter spesifik, harus sesuai tag DAN memiliki bahan mendesak
+        return matchesTag && (currentFilter === 'all' ? true : usesUrgentItem);
     });
 
-    // 5. Urutkan: PRIORITASKAN resep yang menggunakan stok mendesak (urgentItems)
+    // 5. Urutkan: PRIORITASKAN resep yang menggunakan stok mendesak
     if (urgentNames.length > 0) {
         displayedRecipes.sort((a, b) => {
              const aUrgentScore = a.ingredients.filter(ing => urgentNames.includes(ing)).length;
@@ -374,6 +447,48 @@ function renderRecipes() {
     }
 }
 
+/** MERENDER VIDEO REKOMENDASI (BARU) */
+function renderVideos() {
+    const outputContainer = document.getElementById('video-output');
+    outputContainer.innerHTML = '';
+    
+    const gridContainer = document.createElement('div');
+    gridContainer.className = 'recipe-output-grid'; // Menggunakan gaya grid yang sama
+
+    videoDatabase.forEach(video => {
+        const videoCard = document.createElement('div');
+        videoCard.className = 'recipe-card video-card';
+        
+        // Tentukan konten video/link
+        let videoContent;
+        if (video.embed) {
+            // YouTube Embed
+            videoContent = `<iframe width="100%" height="150" src="${video.link}" frameborder="0" allowfullscreen></iframe>`;
+        } else {
+            // Link Eksternal (TikTok) - Ganti dengan Thumbnail jika memungkinkan
+            // Untuk demo, kita gunakan link ke platform
+            videoContent = `<div class="video-placeholder">
+                                <span class="video-source">Platform: ${video.source}</span>
+                                <p class="video-desc">${video.desc}</p>
+                            </div>`;
+        }
+
+        const actionButtonText = video.embed ? 'Tonton di YouTube' : 'Lihat Video (Link)';
+        const actionLink = video.embed ? `https://www.youtube.com/watch?v=${video.link.split('/').pop()}` : video.link;
+
+
+        videoCard.innerHTML = `
+            <h3>${video.title} (${video.source} 📌)</h3>
+            ${videoContent}
+            <p><small>${video.desc}</small></p>
+            <a href="${actionLink}" target="_blank" class="action-button video-button">${actionButtonText}</a>
+        `;
+        gridContainer.appendChild(videoCard);
+    });
+    outputContainer.appendChild(gridContainer);
+}
+
+
 /** Merender daftar Lokasi Rekomendasi (tetap sama) */
 function renderLocations() {
     const outputContainer = document.getElementById('location-output');
@@ -400,7 +515,6 @@ function renderPriceList() {
     const outputContainer = document.getElementById('price-list-output');
     outputContainer.innerHTML = '';
     
-    // Header tabel
     let tableHTML = `
         <table class="price-table">
             <thead>
@@ -414,9 +528,7 @@ function renderPriceList() {
             <tbody>
     `;
 
-    // Isi baris tabel
     PRICE_GUIDE.forEach(item => {
-        // Menggunakan toLocaleString untuk format Rupiah yang rapi
         const formattedPrice = `Rp ${item.price.toLocaleString('id-ID')}`;
         tableHTML += `
             <tr>
@@ -443,7 +555,7 @@ function renderPriceList() {
 //  USER INTERACTION HANDLERS (INPUT & WELCOME)
 // ===================================================
 
-/** Menampilkan form nama atau pesan motivasi */
+/** Menampilkan form nama atau pesan motivasi (tetap sama) */
 function displayWelcomeMessage(name) {
     const welcomeMessageDiv = document.getElementById('welcome-message');
     const nameForm = document.getElementById('name-form');
@@ -471,7 +583,7 @@ function displayWelcomeMessage(name) {
 }
 
 
-// Event listener untuk pengiriman form input nama
+// Event listener untuk pengiriman form input nama (tetap sama)
 document.getElementById('name-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const nameInput = document.getElementById('user-name-input').value.trim();
@@ -482,21 +594,19 @@ document.getElementById('name-form').addEventListener('submit', function(e) {
     }
 });
 
-// Event listener untuk pengiriman form input item
+// Event listener untuk pengiriman form input item (Diperbaiki)
 document.getElementById('add-item-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('item-name').value;
     const date = document.getElementById('exp-date').value;
     const qty = parseInt(document.getElementById('quantity').value);
     const category = document.getElementById('item-category').value; 
-    const estimatedPrice = Math.floor(Math.random() * 50000) + 5000; 
 
     if (name && date && qty > 0 && category) {
         pantryItems.push({ 
             name: name, 
             expDate: date, 
             qty: qty,
-            estimatedPrice: estimatedPrice,
             category: category
         });
         renderPantry();
@@ -506,7 +616,7 @@ document.getElementById('add-item-form').addEventListener('submit', function(e) 
     }
 });
 
-// Event listener untuk filter resep
+// Event listener untuk filter resep (tetap sama)
 document.querySelectorAll('.filter-button').forEach(button => {
     button.addEventListener('click', () => {
         document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
@@ -526,4 +636,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPantry();                 
     renderLocations();              
     renderPriceList();              
+    renderVideos();                 // Panggil render videos saat inisialisasi
 });
+
