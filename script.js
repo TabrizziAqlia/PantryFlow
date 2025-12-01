@@ -155,35 +155,35 @@ const videoDatabase = [
         title: "Roti Tawar Siram Keju Praktis", 
         link: "https://youtube.com/shorts/19oqPA1cHPg?si=usg0YbVqzJPTMFfn", 
         source: "YouTube",
-        embed: false, // Untuk TikTok/link eksternal, tidak menggunakan iframe
+        embed: true, // Untuk TikTok/link eksternal, tidak menggunakan iframe
         desc: "Snack/sarapan cepat dari roti tawar dan keju sisa."
     },
     { 
         title: "Mie Kuah Cabai Merah Viral", 
         link: "https://youtube.com/shorts/FeuXFf0lCgc?si=rG_aCR3EHtvv21NP", 
         source: "YouTube",
-        embed: false,
+        embed: true,
         desc: "Menu pedas cepat dari mie dan cabai rawit/keriting."
     },
     { 
         title: "Bikin Sambal Bawang Awet Seminggu", 
         link: "https://youtu.be/6vv6enFEVc4?si=faXvpq3fu2lRGOd9", 
         source: "YouTube",
-        embed: false,
+        embed: true,
         desc: "Mengolah bawang dan cabai yang banyak agar tidak busuk."
     },
     { 
         title: "Telur Dadar Sayur Super Tebal", 
         link: "https://youtube.com/shorts/KQ7qFFPTlY8?si=QfCGQjU3aXv7NkGt", 
         source: "YouTube",
-        embed: false,
+        embed: true,
         desc: "Telur dadar tebal, kenyang untuk menu sarapan atau makan malam."
     },
     { 
         title: "Nasi Orak-Arik Sayur Pedas", 
         link: "https://youtube.com/shorts/zmlh6wkoOP4?si=u1Nifpi-t3qe_eIP", 
         source: "YouTube",
-        embed: false,
+        embed: true,
         desc: "Nasi sisa dicampur sayur dan telur agar tidak terbuang."
     },
 ];
