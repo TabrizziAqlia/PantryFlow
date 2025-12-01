@@ -118,35 +118,35 @@ const recipeDatabase = [
 const videoDatabase = [
     { 
         title: "5 Resep Olahan Telur Simple", 
-        link: "https://www.youtube.com/embed/j_8j0W1FpB0", 
+        link: "https://youtu.be/Ef2JX3gbShM?si=LDnOM0nSqHoRMNSH", 
         source: "YouTube",
         embed: true, // Untuk YouTube, gunakan iframe embed
         desc: "Resep olahan telur cepat, cocok untuk menghemat stok telur mendekati kedaluwarsa."
     },
     { 
         title: "Masak Mie Instan Ala Carbonara", 
-        link: "https://www.youtube.com/embed/xL2yP8T4o3c", 
+        link: "https://youtu.be/MwBr99t9KME?si=x1Eal6sroGU2lAYg", 
         source: "YouTube",
         embed: true,
         desc: "Upgrade menu mie instan Anda! Cepat saji dan murah meriah."
     },
     { 
         title: "Tumis Sayur Cuma 10 Ribu", 
-        link: "https://www.youtube.com/embed/a9n_f-2-Tgg", 
+        link: "https://youtu.be/WlwRGi_0Y1E?si=Tj_OusUATbsDzt4Q", 
         source: "YouTube",
         embed: true,
         desc: "Cara mengolah sayur segar sebelum layu, modal sangat minim."
     },
     { 
         title: "Nasi Liwet Rice Cooker 1 Porsi", 
-        link: "https://www.youtube.com/embed/L7h0vNq0lK8", 
+        link: "https://youtu.be/a70F8et7UIY?si=g-M9ski0iqm-Caqw", 
         source: "YouTube",
         embed: true,
         desc: "Memasak nasi liwet porsi anak kos dengan rice cooker."
     },
     { 
         title: "Resep Ayam Goreng Bumbu Instan", 
-        link: "https://www.youtube.com/embed/zO9a7Z-6W-k", 
+        link: "https://youtu.be/2mCOAp1Azps?si=Gnn1IOIPFKyCNOzb", 
         source: "YouTube",
         embed: true,
         desc: "Penyelamat daging ayam di kulkas dengan bumbu instan."
@@ -181,7 +181,7 @@ const videoDatabase = [
     },
     { 
         title: "Nasi Orak-Arik Sayur Pedas", 
-        link: "https://vt.tiktok.com/ZSNLfXB4c/", 
+        link: "https://youtu.be/BXFRvlF1v7Q?si=e2v7YklV4UGzifts", 
         source: "TikTok-Style",
         embed: false,
         desc: "Nasi sisa dicampur sayur dan telur agar tidak terbuang."
