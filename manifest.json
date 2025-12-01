@@ -1,0 +1,21 @@
+{
+  "name": "PantryFlow",
+  "short_name": "PantryFlow",
+  "description": "Sinkronisasi Stok, Non Sampah",
+  "start_url": "/PantryFlow/index.html", 
+  "display": "standalone",
+  "background_color": "#191970", 
+  "theme_color": "#191970", 
+  "icons": [
+    {
+      "src": "/PantryFlow/images/icon-192x192.png", 
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/PantryFlow/images/icon-512x512.png", 
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
